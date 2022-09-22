@@ -35,4 +35,3 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }
-

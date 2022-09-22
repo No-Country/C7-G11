@@ -1,4 +1,4 @@
-package com.gimnasiolomas.ar.security;
+package com.gimnasiolomas.ar.security.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 @EnableWebSecurity
 @Configuration
-public class WebAuthorization extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
