@@ -2,9 +2,11 @@ package com.gimnasiolomas.ar.service.serviceImpl;
 
 import com.gimnasiolomas.ar.dto.UserDto;
 import com.gimnasiolomas.ar.entity.User;
+import com.gimnasiolomas.ar.error.NotFoundException;
 import com.gimnasiolomas.ar.repository.UserRepository;
 import com.gimnasiolomas.ar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,7 +37,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserDto saveUser(UserDto userDto) {
+    public ResponseEntity<?> saveUser(UserDto userDto) {
         User user = new User(
                 userDto.getName(),
                 userDto.getLastName(),
@@ -43,12 +45,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 passwordEncoder.encode(userDto.getPassword()));
         userRepository.save(user);
 
-        userDto.setId(user.getId());
-        userDto.setName(user.getName());
-        userDto.setLastName(user.getLastName());
-        userDto.setEmail(user.getEmail());
+        return ResponseEntity.accepted().body("User created!");
+    }
 
-        return userDto;
+    @Override
+    public UserDto findById(long id) {
+        User user = userRepository.findById(id).orElseThrow(()-> new NotFoundException("User not found"));
+        return new UserDto(user);
     }
 
     @Override

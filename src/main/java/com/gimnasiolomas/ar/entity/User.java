@@ -1,6 +1,5 @@
 package com.gimnasiolomas.ar.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
