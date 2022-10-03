@@ -1,6 +1,5 @@
 package com.gimnasiolomas.ar.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -33,7 +32,7 @@ public class User {
     public User(String name, String lastName, String email, String password) {
         this.name = name;
         this.lastName = lastName;
-        this.email = email;
+        this.email = email.toLowerCase();
         this.password = password;
     }
 }
