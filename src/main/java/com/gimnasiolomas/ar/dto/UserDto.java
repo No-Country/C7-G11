@@ -1,8 +1,8 @@
 package com.gimnasiolomas.ar.dto;
 
 import com.gimnasiolomas.ar.entity.User;
-import com.gimnasiolomas.ar.restriction.UniqueEmail;
 import com.gimnasiolomas.ar.restriction.PasswordConstraint;
+import com.gimnasiolomas.ar.restriction.UniqueEmail;
 import lombok.Data;
 
 import javax.validation.constraints.Email;

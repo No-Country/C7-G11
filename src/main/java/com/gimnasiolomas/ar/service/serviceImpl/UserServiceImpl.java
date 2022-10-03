@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = new User(
                 userDto.getName(),
                 userDto.getLastName(),
-                userDto.getEmail(),
+                userDto.getEmail().toLowerCase(),
                 passwordEncoder.encode(userDto.getPassword()));
         userRepository.save(user);
 

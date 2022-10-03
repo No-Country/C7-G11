@@ -1,11 +1,19 @@
 package com.gimnasiolomas.ar;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.gimnasiolomas.ar.entity.Activity;
+import com.gimnasiolomas.ar.entity.ActivitySchedule;
+import com.gimnasiolomas.ar.entity.Schedule;
+import com.gimnasiolomas.ar.entity.WeekDay;
+import com.gimnasiolomas.ar.repository.ActivityRepository;
+import com.gimnasiolomas.ar.repository.ActivityScheduleRepository;
+import com.gimnasiolomas.ar.repository.ScheduleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 public class GimnasioSpringApplication{
@@ -17,7 +25,7 @@ public class GimnasioSpringApplication{
 	}
 
 	@Bean
-	public CommandLineRunner initData() {
+	public CommandLineRunner initData(ActivityScheduleRepository activityScheduleRepository, ActivityRepository activityRepository, ScheduleRepository scheduleRepository) {
 		return (args) -> {
 //			String sql = "INSERT INTO User (name, last_name, email, password) VALUES (?, ?, ?, ?)";
 //			int result = jdbcTemplate.update(sql, "Esteban", "Casile", "esteban@gmail.com", "123456");
@@ -25,6 +33,30 @@ public class GimnasioSpringApplication{
 //				System.out.println("Agregado");
 //			}
 //			System.out.println("Gimnasio Lomas");
+
+
+
+//			Activity activity = new Activity("Pilates");
+//			activityRepository.save(activity);
+//			Schedule schedule = new Schedule(WeekDay.LUNES, 20);
+//			scheduleRepository.save(schedule);
+//			ActivitySchedule activitySchedule = new ActivitySchedule(activity, schedule);
+//			activityScheduleRepository.save(activitySchedule);
+//			Schedule schedule1 = new Schedule(WeekDay.LUNES, 19);
+//			scheduleRepository.save(schedule1);
+//			ActivitySchedule activitySchedule1 = new ActivitySchedule(activity, schedule1);
+//			activityScheduleRepository.save(activitySchedule1);
+//			Schedule schedule2 = new Schedule(WeekDay.LUNES, 21);
+//			scheduleRepository.save(schedule2);
+//			ActivitySchedule activitySchedule2 = new ActivitySchedule(activity, schedule2);
+//			activityScheduleRepository.save(activitySchedule2);
+//			Schedule schedule3 = new Schedule(WeekDay.LUNES, 22);
+//			scheduleRepository.save(schedule3);
+//			ActivitySchedule activitySchedule3 = new ActivitySchedule(activity, schedule3);
+//			activityScheduleRepository.save(activitySchedule3);
+
+
+
 		};
 	}
 }
