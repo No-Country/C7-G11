@@ -12,7 +12,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
@@ -55,8 +58,9 @@ public class GimnasioSpringApplication{
 //			ActivitySchedule activitySchedule3 = new ActivitySchedule(activity, schedule3);
 //			activityScheduleRepository.save(activitySchedule3);
 
-
-
+//			LocalDate localDate = LocalDate.now();
+//			DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+//			System.out.println(dayOfWeek);
 		};
 	}
 }

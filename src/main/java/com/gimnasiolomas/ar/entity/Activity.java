@@ -19,8 +19,6 @@ public class Activity {
     private String activityName;
     @OneToMany(mappedBy = "activity", fetch = FetchType.EAGER)
     private Set<ActivitySchedule> activitySchedules = new HashSet<>();
-
-
     public Activity(){}
     public Activity(String activityName){
         this.activityName = activityName;
@@ -34,15 +32,12 @@ public class Activity {
     public String getActivityName() {
         return activityName;
     }
-
     public void setActivityName(String activityName) {
         this.activityName = activityName;
     }
-
     public Set<ActivitySchedule> getActivitySchedules() {
         return activitySchedules;
     }
-
     public void setActivitySchedules(Set<ActivitySchedule> activitySchedules) {
         this.activitySchedules = activitySchedules;
     }
