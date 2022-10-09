@@ -1,7 +1,8 @@
 package com.gimnasiolomas.ar.service;
 
 import com.gimnasiolomas.ar.dto.UserDto;
-import com.gimnasiolomas.ar.entity.User;
+import com.gimnasiolomas.ar.entity.Activity;
+import com.gimnasiolomas.ar.entity.WeekDay;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 
@@ -12,4 +13,6 @@ public interface UserService {
     List<UserDto> findAll();
     ResponseEntity<?> saveUser(UserDto userDto);
     UserDto findById(long id);
+    ResponseEntity<?> createUserActivitySchedule(Authentication authentication, String activityName, WeekDay weekDay, int hour);
 }
+

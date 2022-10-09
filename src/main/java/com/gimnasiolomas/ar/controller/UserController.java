@@ -2,6 +2,8 @@ package com.gimnasiolomas.ar.controller;
 
 import com.gimnasiolomas.ar.dto.LoginDTO;
 import com.gimnasiolomas.ar.dto.UserDto;
+import com.gimnasiolomas.ar.entity.Activity;
+import com.gimnasiolomas.ar.entity.WeekDay;
 import com.gimnasiolomas.ar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @RestController
@@ -47,5 +50,13 @@ public class UserController {
     @PostMapping
     public ResponseEntity<?> saveUser(@Validated @RequestBody UserDto userDto){
         return userService.saveUser(userDto);
+    }
+
+    @PostMapping("/activity")
+    public ResponseEntity<?> createUserActivitySchedule(Authentication authentication,
+                                                        @RequestParam @NotBlank String activityName,
+                                                        @RequestParam @NotBlank WeekDay weekDay,
+                                                        @RequestParam @NotBlank int hour){
+        return userService.createUserActivitySchedule(authentication, activityName, weekDay, hour);
     }
 }

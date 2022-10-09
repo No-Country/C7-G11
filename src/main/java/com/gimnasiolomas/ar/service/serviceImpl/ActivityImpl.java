@@ -32,8 +32,10 @@ public class ActivityImpl implements ActivityService {
 
     @Override
     public ResponseEntity<?> newActivity(ActivityDTO activityDTO) {
+        if(activityRepository.findByActivityName(activityDTO.getActivity())!=null){
+            return ResponseEntity.accepted().body("Activity already exists");
+        }
         Activity activity = new Activity(activityDTO.getActivity());
-//        activity.setActivitySchedules(activityDTO.getActivitySchedules());
         activityRepository.save(activity);
 
         return ResponseEntity.accepted().body(new ActivityDTO(activity));
@@ -42,15 +44,16 @@ public class ActivityImpl implements ActivityService {
     @Override
     public ResponseEntity<?> newActivitySchedule(String activityName, WeekDay weekDay, int hour) {
         if(activityRepository.findByActivityName(activityName)==null){
-            Activity activity1 = new Activity(activityName);
-            activityRepository.save(activity1);
+            Activity activity = new Activity(activityName);
+            activityRepository.save(activity);
             Schedule schedule = new Schedule(weekDay, hour);
             scheduleRepository.save(schedule);
-            ActivitySchedule activitySchedule = new ActivitySchedule(activity1, schedule);
+            ActivitySchedule activitySchedule = new ActivitySchedule(activity, schedule);
             activityScheduleRepository.save(activitySchedule);
             scheduleRepository.save(schedule);
-            activityRepository.save(activity1);
-            ActivityDTO activityDTO = new ActivityDTO(activity1);
+            activityScheduleRepository.save(activitySchedule);
+            activityRepository.save(activity);
+            ActivityDTO activityDTO = new ActivityDTO(activityRepository.findByActivityName(activityName));
 
             return ResponseEntity.accepted().body(activityDTO);
         }
@@ -60,8 +63,9 @@ public class ActivityImpl implements ActivityService {
         ActivitySchedule activitySchedule = new ActivitySchedule(activity, schedule);
         activityScheduleRepository.save(activitySchedule);
         scheduleRepository.save(schedule);
+        activityScheduleRepository.save(activitySchedule);
         activityRepository.save(activity);
-        ActivityDTO activityDTO = new ActivityDTO(activity);
+        ActivityDTO activityDTO = new ActivityDTO(activityRepository.findByActivityName(activityName));
 
         return ResponseEntity.accepted().body(activityDTO);
     }
