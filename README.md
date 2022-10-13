@@ -2,11 +2,11 @@
 
 Integrantes del Proyecto - Cohorte 7 - G 11 M
 
-Esteban Casile - Backend Java
-Gabriela Scire - UX/UI - Figma
-Benjamín Díaz - FrontEnd 
-Guillermo Rosales Nuñez - Frontend
-Romina Bello - QA Testing Funcional Manual - Trello - Google Planillas de Cálculo
+Esteban Casile - Backend Java  
+Gabriela Scire - UX/UI - Figma  
+Benjamín Díaz - FrontEnd   
+Guillermo Rosales Nuñez - Frontend  
+Romina Bello - QA Testing Funcional Manual - Trello - Google Planillas de Cálculo  
 
 
 
