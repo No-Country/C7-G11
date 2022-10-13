@@ -80,7 +80,7 @@ Botones de redes sociales: Facebook, Instagram en los datos de contacto en el fo
 
 En la barra inferior aparecerá "Términos y condiciones", "Política de privacidad" y "Política de cookies"
 
-Pagos
+# Pagos
 
 El usuario podrá optar por abonar con una tarjeta de débito visa siendo obligatorios los campos de Número de Tarjeta, Vencimiento, CVV. 
 
