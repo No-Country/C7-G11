@@ -32,7 +32,7 @@ El gimnasio cuenta con tres planes de membresía anual:
 Requerimientos:
 
 
-Membresías: 
+# Membresías: 
 
 Se podrá acceder a cualquiera de las membresías anuales, previo registro en la web y abonando por la página con tarjeta de crédito o débito. 
 
@@ -47,7 +47,7 @@ El usuario Basic tiene una restricción de hasta 13 turnos al mes.
 Por día el usuario podrá acceder sólo a 1 turno y elegir el horario entre las 8 am y las 22 hrs.  Los turnos disponibles aparecerán en verde, mientras que los turnos ocupados aparecerán en gris. 
 
 
-Registro: 
+# Registro: 
 
 Para contratar una membresía, el usuario se deberá registrar con mail,  nombre, apellido y fecha de nacimiento. Todos esos campos son obligatorios.
 
@@ -65,7 +65,7 @@ La página de pago deberá contener el nombre de la membresía elegida y el mét
 
 Luego que el usuario haya abonado, le llegará al mail que usó para el registro un mensaje de registro exitoso, junto con el comprobante de pago.
 
-Landing Page:
+# Landing Page:
 
 En la barra de navegación superior: Quiénes somos, Horarios, Servicios, Actividades, Registro, Login. 
 
