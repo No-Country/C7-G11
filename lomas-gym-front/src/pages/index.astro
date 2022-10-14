@@ -1,11 +1,18 @@
 ---
+import Activities from '../components/sections/Activities.astro'
+import Header from '../components/sections/Header.astro'
+import Pricing from '../components/sections/Pricing.astro'
+import Schedule from '../components/sections/Schedule.astro'
+import Services from '../components/sections/Services.astro'
 import Layout from '../layouts/Layout.astro'
 ---
 
-<Layout title="Lomas Gym">
-    <main>
-        <h1 class="bg-red-400">hello world</h1>
+<Layout title="Lomas Gym - Home">
+    <main class="px-[8.25rem] w-full h-screen pt-[5.5rem]">
+        <Header />
+        <Activities />
+        <Schedule />
+        <Pricing />
+        <Services />
     </main>
 </Layout>
-
-<style></style>
