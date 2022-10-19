@@ -18,7 +18,7 @@ public class Utility {
     @Autowired
     private static UserPlanRepository userPlanRepository;
 
-    public WeekDay translateDay(DayOfWeek dayOfWeek){
+    public static WeekDay translateDay(DayOfWeek dayOfWeek){
         if(dayOfWeek.equals(DayOfWeek.MONDAY)){
             return WeekDay.LUNES;
         }
@@ -39,6 +39,30 @@ public class Utility {
         }
         if(dayOfWeek.equals(DayOfWeek.SUNDAY)){
             return WeekDay.DOMINGO;
+        }
+        return null;
+    }
+    public static DayOfWeek translateDayEs(WeekDay weekDay){
+        if(weekDay.equals(WeekDay.LUNES)){
+            return DayOfWeek.MONDAY;
+        }
+        if(weekDay.equals(WeekDay.MARTES)){
+            return DayOfWeek.TUESDAY;
+        }
+        if(weekDay.equals(WeekDay.MIERCOLES)){
+            return DayOfWeek.WEDNESDAY;
+        }
+        if(weekDay.equals(WeekDay.JUEVES)){
+            return DayOfWeek.THURSDAY;
+        }
+        if(weekDay.equals(WeekDay.VIERNES)){
+            return DayOfWeek.FRIDAY;
+        }
+        if(weekDay.equals(WeekDay.SABADO)){
+            return DayOfWeek.SATURDAY;
+        }
+        if(weekDay.equals(WeekDay.DOMINGO)){
+            return DayOfWeek.SUNDAY;
         }
         return null;
     }

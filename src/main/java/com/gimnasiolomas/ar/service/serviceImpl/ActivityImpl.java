@@ -1,6 +1,7 @@
 package com.gimnasiolomas.ar.service.serviceImpl;
 
 import com.gimnasiolomas.ar.dto.ActivityDTO;
+import com.gimnasiolomas.ar.dto.UsersListDTO;
 import com.gimnasiolomas.ar.entity.Activity;
 import com.gimnasiolomas.ar.entity.ActivitySchedule;
 import com.gimnasiolomas.ar.entity.Schedule;
@@ -39,15 +40,26 @@ public class ActivityImpl implements ActivityService {
         return new ActivityDTO(activityRepository.findByActivityName(activityName));
     }
 
+//    @Override
+//    public List<String> listOfUsers(String activityName, String weekDay, int hour) {
+//        WeekDay weekDay1 = Utility.changeToUpperCase(weekDay);
+//        return userActivityScheduleRepository
+//                .findAll()
+//                .stream()
+//                .filter(act -> act.getActivitySchedule().getActivityName().equalsIgnoreCase(activityName))
+//                .filter(act -> act.getActivitySchedule().getSchedule().getWeekDay().equals(weekDay1))
+//                .filter(act-> act.getActivitySchedule().getSchedule().getHour()==hour)
+//                .map(user -> user.getUser().getLastName() + ", " + user.getUser().getName())
+//                .collect(Collectors.toList());
+//    }
+
     @Override
-    public List<String> listOfUsers(String activityName, String weekDay, int hour) {
-        WeekDay weekDay1 = Utility.changeToUpperCase(weekDay);
+    public List<String> listOfUsers2(UsersListDTO usersListDTO) {
         return userActivityScheduleRepository
                 .findAll()
                 .stream()
-                .filter(act -> act.getActivitySchedule().getActivityName().equalsIgnoreCase(activityName))
-                .filter(act -> act.getActivitySchedule().getSchedule().getWeekDay().equals(weekDay1))
-                .filter(act-> act.getActivitySchedule().getSchedule().getHour()==hour)
+                .filter(act -> act.getActivitySchedule().getActivityName().equalsIgnoreCase(usersListDTO.getActivityName()))
+                .filter(act-> act.getDayHourActivity().equals(usersListDTO.getActivityClass()))
                 .map(user -> user.getUser().getLastName() + ", " + user.getUser().getName())
                 .collect(Collectors.toList());
     }
