@@ -1,11 +1,9 @@
 package com.gimnasiolomas.ar.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-//@Data
 @Entity
 public class UserActivitySchedule {
     @Id

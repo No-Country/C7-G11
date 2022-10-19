@@ -17,9 +17,6 @@ public class UserActivityScheduleDTO {
         this.hour = userActivitySchedule.getHour();
     }
 
-    public long getId() {
-        return id;
-    }
     public String getActivityName() {
         return activityName;
     }

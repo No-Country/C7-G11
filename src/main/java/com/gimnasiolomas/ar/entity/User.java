@@ -2,11 +2,13 @@ package com.gimnasiolomas.ar.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.aspectj.lang.annotation.Before;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,22 +30,37 @@ public class User {
     private String email;
     @NotBlank
     private String password;
-
+    private LocalDate birthday;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UserActivitySchedule> userActivitySchedules = new HashSet<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<UserPlan> userPlans = new HashSet<>();
 
     public User() {
     }
 
-    public User(String name, String lastName, String email, String password) {
+    public User(String name, String lastName, String email, String password, LocalDate birthday) {
         this.name = name;
         this.lastName = lastName;
         this.email = email.toLowerCase();
         this.password = password;
+        this.birthday = birthday;
     }
     public void addUserActivity(UserActivitySchedule userActivitySchedule) {
         userActivitySchedule.setUser(this);
         userActivitySchedules.add(userActivitySchedule);
+    }
+    public void addUserPlan(UserPlan userPlan) {
+        userPlan.setUser(this);
+        userPlans.add(userPlan);
+    }
+
+    public Set<UserPlan> getUserPlans() {
+        return userPlans;
+    }
+
+    public void setUserPlans(Set<UserPlan> userPlans) {
+        this.userPlans = userPlans;
     }
 
     public long getId() {
@@ -79,5 +96,11 @@ public class User {
     }
     public void setUserActivitySchedules(Set<UserActivitySchedule> userActivitySchedules) {
         this.userActivitySchedules = userActivitySchedules;
+    }
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 }
