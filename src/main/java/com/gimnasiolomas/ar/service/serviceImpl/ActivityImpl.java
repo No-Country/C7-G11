@@ -5,10 +5,10 @@ import com.gimnasiolomas.ar.entity.Activity;
 import com.gimnasiolomas.ar.entity.ActivitySchedule;
 import com.gimnasiolomas.ar.entity.Schedule;
 import com.gimnasiolomas.ar.entity.WeekDay;
-import com.gimnasiolomas.ar.repository.ActivityRepository;
-import com.gimnasiolomas.ar.repository.ActivityScheduleRepository;
-import com.gimnasiolomas.ar.repository.ScheduleRepository;
+import com.gimnasiolomas.ar.error.NotFoundException;
+import com.gimnasiolomas.ar.repository.*;
 import com.gimnasiolomas.ar.service.ActivityService;
+import com.gimnasiolomas.ar.utility.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,10 +24,32 @@ public class ActivityImpl implements ActivityService {
     private ScheduleRepository scheduleRepository;
     @Autowired
     private ActivityScheduleRepository activityScheduleRepository;
+    @Autowired
+    private UserActivityScheduleRepository userActivityScheduleRepository;
 
     @Override
     public List<ActivityDTO> getAll() {
         return activityRepository.findAll().stream().map(ActivityDTO::new).collect(Collectors.toList());
+    }
+    @Override
+    public ActivityDTO getActivityByName(String activityName) {
+        if(activityRepository.findByActivityName(activityName)==null){
+            throw new NotFoundException("Actividad: " + activityName + ", no encontrada");
+        }
+        return new ActivityDTO(activityRepository.findByActivityName(activityName));
+    }
+
+    @Override
+    public List<String> listOfUsers(String activityName, String weekDay, int hour) {
+        WeekDay weekDay1 = Utility.changeToUpperCase(weekDay);
+        return userActivityScheduleRepository
+                .findAll()
+                .stream()
+                .filter(act -> act.getActivitySchedule().getActivityName().equalsIgnoreCase(activityName))
+                .filter(act -> act.getActivitySchedule().getSchedule().getWeekDay().equals(weekDay1))
+                .filter(act-> act.getActivitySchedule().getSchedule().getHour()==hour)
+                .map(user -> user.getUser().getLastName() + ", " + user.getUser().getName())
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -42,31 +64,25 @@ public class ActivityImpl implements ActivityService {
     }
 
     @Override
-    public ResponseEntity<?> newActivitySchedule(String activityName, WeekDay weekDay, int hour) {
+    public ResponseEntity<?> newActivitySchedule(String activityName, String weekDay, int hour) {
         if(activityRepository.findByActivityName(activityName)==null){
             Activity activity = new Activity(activityName);
             activityRepository.save(activity);
-            Schedule schedule = new Schedule(weekDay, hour);
+            WeekDay weekDay1 = Utility.changeToUpperCase(weekDay);
+            Schedule schedule = new Schedule(weekDay1, hour);
             scheduleRepository.save(schedule);
             ActivitySchedule activitySchedule = new ActivitySchedule(activity, schedule);
             activityScheduleRepository.save(activitySchedule);
-            scheduleRepository.save(schedule);
-            activityScheduleRepository.save(activitySchedule);
-            activityRepository.save(activity);
             ActivityDTO activityDTO = new ActivityDTO(activityRepository.findByActivityName(activityName));
-
             return ResponseEntity.accepted().body(activityDTO);
         }
         Activity activity = activityRepository.findByActivityName(activityName);
-        Schedule schedule = new Schedule(weekDay, hour);
+        WeekDay weekDay1 = Utility.changeToUpperCase(weekDay);
+        Schedule schedule = new Schedule(weekDay1, hour);
         scheduleRepository.save(schedule);
         ActivitySchedule activitySchedule = new ActivitySchedule(activity, schedule);
         activityScheduleRepository.save(activitySchedule);
-        scheduleRepository.save(schedule);
-        activityScheduleRepository.save(activitySchedule);
-        activityRepository.save(activity);
         ActivityDTO activityDTO = new ActivityDTO(activityRepository.findByActivityName(activityName));
-
         return ResponseEntity.accepted().body(activityDTO);
     }
 }

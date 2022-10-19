@@ -1,10 +1,12 @@
 package com.gimnasiolomas.ar.controller;
 
+import com.gimnasiolomas.ar.dto.InscriptionDTO;
 import com.gimnasiolomas.ar.dto.LoginDTO;
-import com.gimnasiolomas.ar.dto.UserDto;
-import com.gimnasiolomas.ar.entity.Activity;
-import com.gimnasiolomas.ar.entity.WeekDay;
+import com.gimnasiolomas.ar.dto.UserDTO;
+import com.gimnasiolomas.ar.entity.User;
+import com.gimnasiolomas.ar.service.EmailSenderService;
 import com.gimnasiolomas.ar.service.UserService;
+import com.gimnasiolomas.ar.utility.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,8 +15,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
@@ -26,17 +29,19 @@ public class UserController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private UserService userService;
+    @Autowired
+    private EmailSenderService emailSenderService;
 
     @GetMapping
-    public List<UserDto> findAll(){
+    public List<UserDTO> findAll(){
         return userService.findAll();
     }
     @GetMapping("/{id}")
-    public UserDto findById(@PathVariable long id){
+    public UserDTO findById(@PathVariable long id){
         return userService.findById(id);
     }
     @GetMapping("/current")
-    public UserDto activeUser(Authentication authentication){
+    public UserDTO activeUser(Authentication authentication){
         return userService.findByEmail(authentication);
     }
 
@@ -48,15 +53,24 @@ public class UserController {
         return ResponseEntity.ok("User logged in correctly");
     }
     @PostMapping
-    public ResponseEntity<?> saveUser(@Validated @RequestBody UserDto userDto){
-        return userService.saveUser(userDto);
+    public ResponseEntity<?> saveUser(@Validated @RequestBody User user){
+        return userService.saveUser(user);
+    }
+
+    @PostMapping("/userplan")
+    public ResponseEntity<?> getUserPlan(Authentication authentication,
+                                         @RequestParam String planName){
+        return userService.getUserPlan(authentication, planName);
     }
 
     @PostMapping("/activity")
     public ResponseEntity<?> createUserActivitySchedule(Authentication authentication,
-                                                        @RequestParam @NotBlank String activityName,
-                                                        @RequestParam @NotBlank WeekDay weekDay,
-                                                        @RequestParam @NotBlank int hour){
-        return userService.createUserActivitySchedule(authentication, activityName, weekDay, hour);
+                                                        @Validated @RequestBody InscriptionDTO inscriptionDTO){
+        return userService.createUserActivitySchedule(authentication, inscriptionDTO);
     }
+    //todo ->   planes -> vincular con usuarios
+    //todo ->   planes -> crear la propiedad que muestre la cantidad de inscripciones restantes
+    //todo ->   inscripcion con dias y horas
+    //todo ->   cambiar peticiones de param a body
+
 }
