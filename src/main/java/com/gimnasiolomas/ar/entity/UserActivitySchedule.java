@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+
 @Entity
 public class UserActivitySchedule {
     @Id
@@ -19,21 +21,23 @@ public class UserActivitySchedule {
     private String activityName;
     private WeekDay day;
     private int hour;
+    private LocalDateTime dayHourActivity;
 
 
     public UserActivitySchedule(){}
-    public UserActivitySchedule(User user, ActivitySchedule activitySchedule){
+    public UserActivitySchedule(User user, ActivitySchedule activitySchedule, LocalDateTime dayHourActivity){
         this.user = user;
         this.activitySchedule = activitySchedule;
         this.activityName = activitySchedule.getActivityName();
         this.day = activitySchedule.getSchedule().getWeekDay();
         this.hour = activitySchedule.getSchedule().getHour();
+        this.dayHourActivity = dayHourActivity;
     }
 
     public long getId() {
         return id;
     }
-    @JsonIgnore
+//    @JsonIgnore
     public User getUser() {
         return user;
     }
@@ -63,5 +67,13 @@ public class UserActivitySchedule {
     }
     public void setHour(int hour) {
         this.hour = hour;
+    }
+
+    public LocalDateTime getDayHourActivity() {
+        return dayHourActivity;
+    }
+
+    public void setDayHourActivity(LocalDateTime dayHourActivity) {
+        this.dayHourActivity = dayHourActivity;
     }
 }

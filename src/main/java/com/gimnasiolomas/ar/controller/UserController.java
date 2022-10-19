@@ -68,9 +68,8 @@ public class UserController {
                                                         @Validated @RequestBody InscriptionDTO inscriptionDTO){
         return userService.createUserActivitySchedule(authentication, inscriptionDTO);
     }
-    //todo ->   planes -> vincular con usuarios
-    //todo ->   planes -> crear la propiedad que muestre la cantidad de inscripciones restantes
+
+
     //todo ->   inscripcion con dias y horas
-    //todo ->   cambiar peticiones de param a body
 
 }

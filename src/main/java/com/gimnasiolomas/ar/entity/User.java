@@ -1,8 +1,6 @@
 package com.gimnasiolomas.ar.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import org.aspectj.lang.annotation.Before;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
