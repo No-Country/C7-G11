@@ -37,15 +37,9 @@ public class ActivityController {
                                                  @RequestParam int hour){
         return activityService.newActivitySchedule(activityName, weekDay, hour);
     }
-//    @GetMapping("/{activityName}/{weekDay}/{hour}")
-//    public List<String> listOfUsers(@PathVariable String activityName,
-//                                     @PathVariable String weekDay,
-//                                     @PathVariable int hour){
-//        return activityService.listOfUsers(activityName, weekDay, hour);
-//    }
     @GetMapping("/userslist")
-    public List<String> listOfUsers2(@RequestBody UsersListDTO usersListDTO){
-        return activityService.listOfUsers2(usersListDTO);
+    public List<String> listOfUsers(@RequestBody UsersListDTO usersListDTO){
+        return activityService.listOfUsers(usersListDTO);
     }
 
 }

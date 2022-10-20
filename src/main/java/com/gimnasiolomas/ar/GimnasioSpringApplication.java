@@ -11,6 +11,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -30,6 +32,8 @@ public class GimnasioSpringApplication{
 	@Bean
 	public CommandLineRunner initData(ActivityScheduleRepository activityScheduleRepository, ActivityRepository activityRepository, ScheduleRepository scheduleRepository) {
 		return (args) -> {
+
+
 //			String sql = "INSERT INTO User (name, last_name, email, password) VALUES (?, ?, ?, ?)";
 //			int result = jdbcTemplate.update(sql, "Esteban", "Casile", "esteban@gmail.com", "123456");
 //			if (result > 0) {
@@ -61,6 +65,15 @@ public class GimnasioSpringApplication{
 //			LocalDate localDate = LocalDate.now();
 //			DayOfWeek dayOfWeek = localDate.getDayOfWeek();
 //			System.out.println(dayOfWeek);
+		};
+	}
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**").allowedOrigins("/**").allowedMethods("*").allowedHeaders("*");
+			}
 		};
 	}
 }

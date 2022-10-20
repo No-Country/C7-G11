@@ -2,6 +2,7 @@ package com.gimnasiolomas.ar.service;
 
 import com.gimnasiolomas.ar.dto.ActivityDTO;
 import com.gimnasiolomas.ar.dto.UsersListDTO;
+import com.gimnasiolomas.ar.entity.Activity;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -15,5 +16,6 @@ public interface ActivityService {
 
 //    List<String> listOfUsers(String activityName, String weekDay, int hour);
 
-    List<String> listOfUsers2(UsersListDTO usersListDTO);
+    List<String> listOfUsers(UsersListDTO usersListDTO);
+    Activity findByActivityName(String activityName);
 }

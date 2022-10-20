@@ -1,13 +1,16 @@
 package com.gimnasiolomas.ar.service.serviceImpl;
 
+import com.gimnasiolomas.ar.constants.Messages;
 import com.gimnasiolomas.ar.dto.InscriptionDTO;
 import com.gimnasiolomas.ar.dto.UserDTO;
 import com.gimnasiolomas.ar.dto.UserPlanDTO;
 import com.gimnasiolomas.ar.entity.*;
+import com.gimnasiolomas.ar.error.ActivePlanException;
 import com.gimnasiolomas.ar.error.NotFoundException;
+import com.gimnasiolomas.ar.error.PlanNotFoundException;
+import com.gimnasiolomas.ar.error.UnderLegalAgeException;
 import com.gimnasiolomas.ar.repository.*;
-import com.gimnasiolomas.ar.service.EmailSenderService;
-import com.gimnasiolomas.ar.service.UserService;
+import com.gimnasiolomas.ar.service.*;
 import com.gimnasiolomas.ar.utility.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,15 +36,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private ActivityRepository activityRepository;
+    private ActivityService activityService;
     @Autowired
-    private UserActivityScheduleRepository userActivityScheduleRepository;
+    private UserActivityScheduleService userActivityScheduleService;
     @Autowired
     private EmailSenderService emailSenderService;
     @Autowired
-    private PlanRepository planRepository;
+    private UserPlanService userPlanService;
     @Autowired
-    private UserPlanRepository userPlanRepository;
+    private PlanService planService;
 
 
     @Override
@@ -50,13 +53,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
     @Override
     public List<UserDTO> findAll() {
-        System.out.println(userRepository.findAll().stream().map(user -> user.getName()).collect(Collectors.toList()));
+//        System.out.println(userRepository.findAll().stream().map(User::getName).collect(Collectors.toList()));
         return userRepository.findAll().stream().map(UserDTO::new).collect(Collectors.toList());
     }
     @Override
-    public ResponseEntity<?> saveUser(User user) {
+    public UserDTO saveUser(User user) throws UnderLegalAgeException {
         if(user.getBirthday().isAfter(LocalDate.now().minusYears(18))){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Debes ser mayor de 18 años para registrarte en nuestro Gimnasio");
+            throw new UnderLegalAgeException(Messages.UNDER_LEGAL_AGE_EXCEPTION);
         }
         User user1 = new User(
                 user.getName(),
@@ -69,7 +72,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         String body = "Gracias por registrarte en nuestra página, bla bla bla";
         emailSenderService.sendEmail(user1.getEmail(), subject, body);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new UserDTO(user1));
+        return new UserDTO(user1);
     }
 
     @Override
@@ -87,7 +90,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new NotFoundException("Usuario no encontrado");
         }
 
-        Activity activity = activityRepository.findByActivityName(inscriptionDTO.getActivityName());
+        Activity activity = activityService.findByActivityName(inscriptionDTO.getActivityName());
         if(activity == null){
             throw new NotFoundException("Actividad no encontrada");
         }
@@ -97,7 +100,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new NotFoundException("Membresía vencída");
         }
         if(userPlan.getGymClassesLeft()==0){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ya usaste todas las clases de tu membresía");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Messages.NO_GYM_CLASSES_LEFT);
         }
 
         WeekDay weekDay1 = Utility.translateDay(inscriptionDTO.getDayHourActivity().getDayOfWeek());
@@ -105,7 +108,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             if(uas.getActivitySchedule().getActivity().getActivityName().equalsIgnoreCase(inscriptionDTO.getActivityName())
                     && uas.getActivitySchedule().getSchedule().getHour()== inscriptionDTO.getDayHourActivity().getHour()
                     && uas.getActivitySchedule().getSchedule().getWeekDay()==weekDay1){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ya estabas inscripto para la clase de " + activity.getActivityName() + " el dia " + weekDay1 + " a las " + inscriptionDTO.getDayHourActivity().getHour() + " hs");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("Ya estabas inscripto para la clase de "
+                                + activity.getActivityName()
+                                + " el dia "
+                                + weekDay1
+                                + " "
+                                + uas.getDayHourActivity().getDayOfMonth()
+                                + "/"
+                                + uas.getDayHourActivity().getMonth().getValue()
+                                + " a las "
+                                + inscriptionDTO.getDayHourActivity().getHour()
+                                + " hs");
             }
         }
 
@@ -113,48 +127,66 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             if(uas.getDayHourActivity().getMonth() == inscriptionDTO.getDayHourActivity().getMonth()
                     && uas.getDayHourActivity().getDayOfMonth() == inscriptionDTO.getDayHourActivity().getDayOfMonth()
                     && uas.getDayHourActivity().getYear() == inscriptionDTO.getDayHourActivity().getYear()){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No te puedes inscribir a más de 1 clase por día. Estabas inscripto a la clase de " + uas.getActivityName() + ", el día " + weekDay1 + ", a las " + uas.getDayHourActivity().getHour() + " hs.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("No te puedes inscribir a más de 1 clase por día. Estabas inscripto a la clase de "
+                                + uas.getActivityName()
+                                + ", el día "
+                                + weekDay1
+                                + " "
+                                +uas.getDayHourActivity().getDayOfMonth()
+                                + "/"
+                                + uas.getDayHourActivity().getMonth().getValue()
+                                + ", a las "
+                                + uas.getDayHourActivity().getHour()
+                                + " hs.");
             }
         }
 
         for(ActivitySchedule sch : activity.getActivitySchedules()){
             if(sch.getSchedule().getHour()== inscriptionDTO.getDayHourActivity().getHour() && sch.getSchedule().getWeekDay()==weekDay1){
                 UserActivitySchedule userActivitySchedule = new UserActivitySchedule(user, sch, inscriptionDTO.getDayHourActivity());
-                userActivityScheduleRepository.save(userActivitySchedule);
+                userActivityScheduleService.save(userActivitySchedule);
                 userPlan.substractGymClass();
-                userPlanRepository.save(userPlan);
-                return ResponseEntity.status(HttpStatus.CREATED).body("Inscripto a la clase de " + activity.getActivityName() + ", el día: " + userActivitySchedule.getActivitySchedule().getSchedule().getWeekDay() + ", a las " + userActivitySchedule.getActivitySchedule().getSchedule().getHour() + " hs.");
+                userPlanService.save(userPlan);
+                return ResponseEntity.status(HttpStatus.CREATED)
+                        .body("Inscripto a la clase de "
+                                + activity.getActivityName()
+                                + ", el día: "
+                                + userActivitySchedule.getActivitySchedule().getSchedule().getWeekDay()
+                                + ", a las "
+                                + userActivitySchedule.getActivitySchedule().getSchedule().getHour()
+                                + " hs.");
             }
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No existe la actividad " + inscriptionDTO.getActivityName() + " en el horario: " + inscriptionDTO.getDayHourActivity().getHour() + " hs. el día " + weekDay1);
     }
 
     @Override
-    public ResponseEntity<?> getUserPlan(Authentication authentication, String planName) {
-        User user = userRepository.findByEmail(authentication.getName());
-        if(user==null){
-            throw new NotFoundException("Usuario no encontrado");
-        }
-        Plan plan = planRepository.findByName(planName);
-        if(plan == null){
-            throw new NotFoundException("Plan no encontrado");
-        }
-        UserPlan userPlan = user.getUserPlans().stream().filter(UserPlan::isActive).findFirst().orElse(null);
-        if(userPlan != null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ya tienes un plan activo");
-        }
-        UserPlan userPlan1 = new UserPlan(user, plan);
-        userPlanRepository.save(userPlan1);
+    public UserPlanDTO assignNewPlan(Authentication authentication, String planName) throws PlanNotFoundException {
+         User user = userRepository.findByEmail(authentication.getName());
+         Plan plan = planService.getPlan(planName);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new UserPlanDTO(userPlan1));
+        if(validateActivePlan(user)){
+              throw new ActivePlanException(Messages.ACTIVE_PLAN_EXCEPTION);
+        }
+        UserPlan userPlan = new UserPlan(user, plan);
+        userPlanService.save(userPlan);
+        return new UserPlanDTO(userPlan);
     }
+
+
+
+    private boolean validateActivePlan(User user){
+        return user.getUserPlans().stream().anyMatch(UserPlan::isActive);
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String emailOrPassword) throws UsernameNotFoundException {
         User user = userRepository.findByEmailOrPassword(emailOrPassword, emailOrPassword);
 
         if(user == null){
-            throw new UsernameNotFoundException("ok: false");
+            throw new UsernameNotFoundException(Messages.USER_NOTFOUND);
         }
 
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
