@@ -4,9 +4,10 @@ import com.gimnasiolomas.ar.dto.InscriptionDTO;
 import com.gimnasiolomas.ar.dto.LoginDTO;
 import com.gimnasiolomas.ar.dto.UserDTO;
 import com.gimnasiolomas.ar.entity.User;
+import com.gimnasiolomas.ar.error.PlanNotFoundException;
+import com.gimnasiolomas.ar.error.UnderLegalAgeException;
 import com.gimnasiolomas.ar.service.EmailSenderService;
 import com.gimnasiolomas.ar.service.UserService;
-import com.gimnasiolomas.ar.utility.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,9 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @RestController
@@ -53,14 +51,14 @@ public class UserController {
         return ResponseEntity.ok("User logged in correctly");
     }
     @PostMapping
-    public ResponseEntity<?> saveUser(@Validated @RequestBody User user){
-        return userService.saveUser(user);
+    public ResponseEntity<?> saveUser(@Validated @RequestBody User user) throws UnderLegalAgeException {
+        return ResponseEntity.ok(userService.saveUser(user));
     }
 
     @PostMapping("/userplan")
     public ResponseEntity<?> getUserPlan(Authentication authentication,
-                                         @RequestParam String planName){
-        return userService.getUserPlan(authentication, planName);
+                                         @RequestParam String planName) throws PlanNotFoundException {
+        return ResponseEntity.ok(userService.assignNewPlan(authentication, planName));
     }
 
     @PostMapping("/activity")
