@@ -23,8 +23,6 @@ import java.util.List;
 @SpringBootApplication
 public class GimnasioSpringApplication{
 
-//	@Autowired
-//	private JdbcTemplate jdbcTemplate;
 	public static void main(String[] args) {
 		SpringApplication.run(GimnasioSpringApplication.class, args);
 	}
@@ -32,8 +30,6 @@ public class GimnasioSpringApplication{
 	@Bean
 	public CommandLineRunner initData(ActivityScheduleRepository activityScheduleRepository, ActivityRepository activityRepository, ScheduleRepository scheduleRepository) {
 		return (args) -> {
-
-
 //			String sql = "INSERT INTO User (name, last_name, email, password) VALUES (?, ?, ?, ?)";
 //			int result = jdbcTemplate.update(sql, "Esteban", "Casile", "esteban@gmail.com", "123456");
 //			if (result > 0) {
@@ -67,13 +63,16 @@ public class GimnasioSpringApplication{
 //			System.out.println(dayOfWeek);
 		};
 	}
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("/**").allowedMethods("*").allowedHeaders("*");
-			}
-		};
-	}
+//	@Bean
+//	public WebMvcConfigurer corsConfigurer() {
+//		return new WebMvcConfigurer() {
+//			@Override
+//			public void addCorsMappings(CorsRegistry registry) {
+//				registry.addMapping("/**")
+//						.allowedOrigins("/**")
+//						.allowedMethods("*")
+//						.allowedHeaders("*");
+//			}
+//		};
+//	}
 }
