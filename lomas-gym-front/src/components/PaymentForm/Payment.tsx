@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { successIcon } from '../../../public/icons'
 import { debitCard } from '../../../public/images'
 
 const Payment = () => {
@@ -33,7 +34,12 @@ const Payment = () => {
             .then(data => console.log(data))
             .catch(err => console.error(err))
     }, [])
-    // const handlePayment = setTimeout(() => {}, 3000)
+
+    const handlePayment = () => {
+        setTimeout(() => {
+            setPaymentStep('success')
+        }, 1500)
+    }
 
     if (paymentStep == 'payment') {
         return (
@@ -127,11 +133,43 @@ const Payment = () => {
         )
     } else if (paymentStep == 'processing') {
         return (
-            <div className="flex justify-center items-center gap-60 h-full membership-container">
-                <p>
+            <div className="flex flex-col justify-center gap-10 items-center w-screen h-full membership-container text-lg">
+                <div className="spinner"></div>
+                <p className="font-bold">
                     Estamos procesando tu pago, esto puede demorar unos
                     minutos...
                 </p>
+            </div>
+        )
+    } else if (paymentStep == 'success') {
+        return (
+            <div className="flex justify-center items-center gap-60 w-screen h-full membership-container">
+                <div className="border-2 boder-[#2A2550] rounded-xl bg-white text-center flex flex-col items-center max-w-[491px] max-h-[488px] p-20">
+                    <img src={successIcon} className="max-w-[80px]" />
+                    <h2 className="mt-8 mb-2 font-bold text-xl">
+                        ¡Pago realizado con exito!
+                    </h2>
+                    <p className="font-regular">
+                        Revisá tu bandeja de entrada para visualizar el
+                        comprobante
+                    </p>
+                    <div className="flex flex-col gap-5 mt-10">
+                        <a
+                            className="py-3 px-20 bg-[#E04D01] rounded-lg text-white text-center"
+                            href="/scheduleTurn"
+                        >
+                            {' '}
+                            RESERVÁ TUS PASES{' '}
+                        </a>
+                        <a
+                            href="/"
+                            className="py-3 px-20 bg-white rounded-lg text-[#D04801] border border-[#D04801] text-center"
+                        >
+                            {' '}
+                            Volver al inicio{' '}
+                        </a>
+                    </div>
+                </div>
             </div>
         )
     }

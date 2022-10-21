@@ -1,5 +1,5 @@
 ---
-import PricingCard from '../cards/PricingCard.astro'
+import PricingCard from '../cards/PricingCard'
 
 const benefits = [
     ['13 Pases al mes.'],
@@ -23,12 +23,23 @@ const benefits = [
         </p>
     </div>
     <div class="flex items-center justify-around">
-        <PricingCard plan_name="Basico" price="9.000" benefits={benefits[0]} />
-        <PricingCard plan_name="VIP" price="12.000" benefits={benefits[1]} />
+        <PricingCard
+            plan_name="Basico"
+            price="9.000"
+            benefits={benefits[0]}
+            client:load
+        />
+        <PricingCard
+            plan_name="Vip"
+            price="12.000"
+            benefits={benefits[1]}
+            client:load
+        />
         <PricingCard
             plan_name="Premium"
             price="15.000"
             benefits={benefits[2]}
+            client:load
         />
     </div>
 </section>
