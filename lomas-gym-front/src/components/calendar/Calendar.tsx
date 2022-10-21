@@ -36,24 +36,23 @@ const Calendar = () => {
         }
     }
 
-    console.log(selectedDay.toString().slice(0, 3))
-
     const handleRequest = () => {
         const date =
             selectedDay.toISOString().slice(0, 11) + selectedHour.split(' ')[0]
 
         const bodyRequest = {
             activityName: 'Pilates',
-            date: date
+            dayHourActivity: date
         }
 
         fetch('https://c7-g11-production.up.railway.app/api/users/activity', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
             },
-            body: JSON.stringify(bodyRequest),
-            credentials: 'include'
+            credentials: 'include',
+            body: JSON.stringify(bodyRequest)
         })
             .then(res => {
                 console.log(res)
