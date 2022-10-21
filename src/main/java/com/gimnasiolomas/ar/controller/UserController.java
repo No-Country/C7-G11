@@ -51,7 +51,7 @@ public class UserController {
 
         //TODO pruebas
         auth.getAuthorities();
-        return ResponseEntity.ok(auth.getCredentials());
+        return ResponseEntity.ok(auth.getCredentials().toString());
     }
     @PostMapping
     public ResponseEntity<?> saveUser(@Validated @RequestBody User user) throws UnderLegalAgeException {
