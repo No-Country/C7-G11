@@ -34,11 +34,9 @@ Requerimientos:
 
 # Membresías: 
 
-Se podrá acceder a cualquiera de las membresías anuales, previo registro en la web y abonando por la página con tarjeta de crédito o débito. 
+Se podrá acceder a cualquiera de las membresías mensuales, previo registro en la web y abonando por la página con tarjeta de crédito o débito. 
 
 El usuario podrá sacar turno a través del almanaque de la página, eligiendo día y horario (según disponibilidad). 
-
-Por turno podrán ingresar hasta 30 personas. 
 
 Para poder acceder a la elección de fechas, deberá estar con una membresía activa. 
 
