@@ -1,7 +1,6 @@
 package com.gimnasiolomas.ar.dto;
 
 import com.gimnasiolomas.ar.entity.User;
-import com.gimnasiolomas.ar.entity.UserPlan;
 import com.gimnasiolomas.ar.restriction.PasswordConstraint;
 import com.gimnasiolomas.ar.restriction.UniqueEmail;
 
@@ -50,9 +49,6 @@ public class UserDTO {
     public String getEmail() {
         return email;
     }
-//    public String getPassword() {
-//        return password;
-//    }
     public Set<UserActivityScheduleDTO> getUserActivitySchedulesDTO() {
         return userActivitySchedulesDTO;
     }

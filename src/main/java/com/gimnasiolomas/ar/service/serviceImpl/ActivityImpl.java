@@ -1,20 +1,21 @@
 package com.gimnasiolomas.ar.service.serviceImpl;
 
+import com.gimnasiolomas.ar.constants.Messages;
 import com.gimnasiolomas.ar.dto.ActivityDTO;
 import com.gimnasiolomas.ar.dto.UsersListDTO;
 import com.gimnasiolomas.ar.entity.Activity;
 import com.gimnasiolomas.ar.entity.ActivitySchedule;
 import com.gimnasiolomas.ar.entity.Schedule;
 import com.gimnasiolomas.ar.entity.WeekDay;
-import com.gimnasiolomas.ar.error.NotFoundException;
-import com.gimnasiolomas.ar.repository.*;
+import com.gimnasiolomas.ar.error.ActivityAlreadyExistException;
+import com.gimnasiolomas.ar.error.NoActivityFoundException;
+import com.gimnasiolomas.ar.repository.ActivityRepository;
 import com.gimnasiolomas.ar.service.ActivityScheduleService;
 import com.gimnasiolomas.ar.service.ActivityService;
 import com.gimnasiolomas.ar.service.ScheduleService;
 import com.gimnasiolomas.ar.service.UserActivityScheduleService;
 import com.gimnasiolomas.ar.utility.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,14 +37,14 @@ public class ActivityImpl implements ActivityService {
         return activityRepository.findAll().stream().map(ActivityDTO::new).collect(Collectors.toList());
     }
     @Override
-    public ActivityDTO getActivityByName(String activityName) {
-        if(activityRepository.findByActivityName(activityName)==null){
-            throw new NotFoundException("Actividad: " + activityName + ", no encontrada");
-        }
-        return new ActivityDTO(activityRepository.findByActivityName(activityName));
+    public ActivityDTO getActivityByName(String activityName) throws NoActivityFoundException {
+        Activity activity = activityRepository.findByActivityName(activityName).orElseThrow(()-> new NoActivityFoundException(activityName + ": " + Messages.ACTIVITY_NOT_FOUND));
+
+        return new ActivityDTO(activity);
     }
     @Override
-    public List<String> listOfUsers(UsersListDTO usersListDTO) {
+    public List<String> listOfUsers(UsersListDTO usersListDTO) throws NoActivityFoundException {
+        Activity activity = activityRepository.findByActivityName(usersListDTO.getActivityName()).orElseThrow(()-> new NoActivityFoundException(Messages.ACTIVITY_NOT_FOUND));
         return userActivityScheduleService
                 .findAll()
                 .stream()
@@ -54,24 +55,24 @@ public class ActivityImpl implements ActivityService {
     }
 
     @Override
-    public Activity findByActivityName(String activityName) {
-        return activityRepository.findByActivityName(activityName);
+    public Activity findByActivityName(String activityName) throws NoActivityFoundException {
+        return activityRepository.findByActivityName(activityName).orElseThrow(()-> new NoActivityFoundException(activityName + ": " + Messages.ACTIVITY_NOT_FOUND));
     }
 
     @Override
-    public ResponseEntity<?> newActivity(ActivityDTO activityDTO) {
-        if(activityRepository.findByActivityName(activityDTO.getActivity())!=null){
-            return ResponseEntity.accepted().body("Activity already exists");
+    public ActivityDTO newActivity(ActivityDTO activityDTO) throws ActivityAlreadyExistException {
+        if(activityRepository.findByActivityName(activityDTO.getActivity()).isPresent()){
+            throw new ActivityAlreadyExistException(Messages.ACTIVITY_ALREADY_EXISTS);
         }
         Activity activity = new Activity(activityDTO.getActivity());
         activityRepository.save(activity);
 
-        return ResponseEntity.accepted().body(new ActivityDTO(activity));
+        return new ActivityDTO(activity);
     }
 
     @Override
-    public ResponseEntity<?> newActivitySchedule(String activityName, String weekDay, int hour) {
-        if(activityRepository.findByActivityName(activityName)==null){
+    public ActivityDTO newActivitySchedule(String activityName, String weekDay, int hour) {
+        if(activityRepository.findByActivityName(activityName).orElse(null)==null){
             Activity activity = new Activity(activityName);
             activityRepository.save(activity);
             WeekDay weekDay1 = Utility.changeToUpperCase(weekDay);
@@ -79,16 +80,14 @@ public class ActivityImpl implements ActivityService {
             scheduleService.save(schedule);
             ActivitySchedule activitySchedule = new ActivitySchedule(activity, schedule);
             activityScheduleService.save(activitySchedule);
-            ActivityDTO activityDTO = new ActivityDTO(activityRepository.findByActivityName(activityName));
-            return ResponseEntity.accepted().body(activityDTO);
+            return new ActivityDTO(activity);
         }
-        Activity activity = activityRepository.findByActivityName(activityName);
+        Activity activity = activityRepository.findByActivityName(activityName).get();
         WeekDay weekDay1 = Utility.changeToUpperCase(weekDay);
         Schedule schedule = new Schedule(weekDay1, hour);
         scheduleService.save(schedule);
         ActivitySchedule activitySchedule = new ActivitySchedule(activity, schedule);
         activityScheduleService.save(activitySchedule);
-        ActivityDTO activityDTO = new ActivityDTO(activityRepository.findByActivityName(activityName));
-        return ResponseEntity.accepted().body(activityDTO);
+        return new ActivityDTO(activity);
     }
 }

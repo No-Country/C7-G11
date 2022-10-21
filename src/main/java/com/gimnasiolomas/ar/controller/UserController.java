@@ -4,8 +4,7 @@ import com.gimnasiolomas.ar.dto.InscriptionDTO;
 import com.gimnasiolomas.ar.dto.LoginDTO;
 import com.gimnasiolomas.ar.dto.UserDTO;
 import com.gimnasiolomas.ar.entity.User;
-import com.gimnasiolomas.ar.error.PlanNotFoundException;
-import com.gimnasiolomas.ar.error.UnderLegalAgeException;
+import com.gimnasiolomas.ar.error.*;
 import com.gimnasiolomas.ar.service.EmailSenderService;
 import com.gimnasiolomas.ar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +63,7 @@ public class UserController {
 
     @PostMapping("/activity")
     public ResponseEntity<?> createUserActivitySchedule(Authentication authentication,
-                                                        @Validated @RequestBody InscriptionDTO inscriptionDTO){
-        return userService.createUserActivitySchedule(authentication, inscriptionDTO);
+                                                        @Validated @RequestBody InscriptionDTO inscriptionDTO) throws ActivityAlreadyScheduledException, NoActivityFoundException, NoGymClassesLeftException {
+        return ResponseEntity.ok(userService.createUserActivitySchedule(authentication, inscriptionDTO));
     }
 }

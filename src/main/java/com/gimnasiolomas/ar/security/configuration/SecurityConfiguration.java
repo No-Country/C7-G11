@@ -1,6 +1,5 @@
 package com.gimnasiolomas.ar.security.configuration;
 
-import com.gimnasiolomas.ar.service.UserService;
 import com.gimnasiolomas.ar.service.serviceImpl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

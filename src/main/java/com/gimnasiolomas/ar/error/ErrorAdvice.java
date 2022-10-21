@@ -62,4 +62,40 @@ public class ErrorAdvice {
     public ApiError handleValidationError(ValidationException e, HttpServletRequest request){
         return new ApiError(400, e.getMessage(), request.getServletPath());
     }
+    @ExceptionHandler(UnderLegalAgeException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleUnderLegalAgeException(UnderLegalAgeException e, HttpServletRequest request){
+        return new ApiError(400, e.getMessage(), request.getServletPath());
+    }
+    @ExceptionHandler(PlanNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiError handlePlanNotFoundException(PlanNotFoundException e, HttpServletRequest request){
+        return new ApiError(404, e.getMessage(), request.getServletPath());
+    }
+    @ExceptionHandler(ActivePlanException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleActivePlanException(ActivePlanException e, HttpServletRequest request){
+        return new ApiError(400, e.getMessage(), request.getServletPath());
+    }
+    @ExceptionHandler(ActivityAlreadyScheduledException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleActivityAlreadyScheduledException(ActivityAlreadyScheduledException e, HttpServletRequest request){
+        return new ApiError(400, e.getMessage(), request.getServletPath());
+    }
+    @ExceptionHandler(ActivityAlreadyExistException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleActivityAlreadyExistException(ActivityAlreadyExistException e, HttpServletRequest request){
+        return new ApiError(400, e.getMessage(), request.getServletPath());
+    }
+    @ExceptionHandler(NoActivityFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiError handleNoActivityFoundException(NoActivityFoundException e, HttpServletRequest request){
+        return new ApiError(400, e.getMessage(), request.getServletPath());
+    }
+    @ExceptionHandler(NoGymClassesLeftException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleNoGymClassesLeftException(NoGymClassesLeftException e, HttpServletRequest request){
+        return new ApiError(400, e.getMessage(), request.getServletPath());
+    }
+
 }
