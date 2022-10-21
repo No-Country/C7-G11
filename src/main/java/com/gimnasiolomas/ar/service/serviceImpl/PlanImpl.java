@@ -7,8 +7,6 @@ import com.gimnasiolomas.ar.error.PlanNotFoundException;
 import com.gimnasiolomas.ar.repository.PlanRepository;
 import com.gimnasiolomas.ar.service.PlanService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -30,10 +28,10 @@ public class PlanImpl implements PlanService {
     }
 
     @Override
-    public ResponseEntity<?> savePlan(PlanDTO planDTO) {
+    public PlanDTO savePlan(PlanDTO planDTO) {
         Plan plan = new Plan(planDTO.getName(), planDTO.getDescription(), planDTO.getPrice(), planDTO.getGymClasses());
         planRepository.save(plan);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new PlanDTO(plan));
+        return new PlanDTO(plan);
     }
 
     @Override

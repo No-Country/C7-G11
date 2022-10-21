@@ -3,19 +3,16 @@ package com.gimnasiolomas.ar.service;
 import com.gimnasiolomas.ar.dto.ActivityDTO;
 import com.gimnasiolomas.ar.dto.UsersListDTO;
 import com.gimnasiolomas.ar.entity.Activity;
-import org.springframework.http.ResponseEntity;
+import com.gimnasiolomas.ar.error.ActivityAlreadyExistException;
+import com.gimnasiolomas.ar.error.NoActivityFoundException;
 
 import java.util.List;
 
 public interface ActivityService {
     List<ActivityDTO> getAll();
-    ResponseEntity<?> newActivity(ActivityDTO activityDTO);
-    ResponseEntity<?> newActivitySchedule(String activityName, String weekDay, int hour);
-
-    ActivityDTO getActivityByName(String activityName);
-
-//    List<String> listOfUsers(String activityName, String weekDay, int hour);
-
-    List<String> listOfUsers(UsersListDTO usersListDTO);
-    Activity findByActivityName(String activityName);
+    ActivityDTO newActivity(ActivityDTO activityDTO) throws ActivityAlreadyExistException;
+    ActivityDTO newActivitySchedule(String activityName, String weekDay, int hour);
+    ActivityDTO getActivityByName(String activityName) throws NoActivityFoundException;
+    List<String> listOfUsers(UsersListDTO usersListDTO) throws NoActivityFoundException;
+    Activity findByActivityName(String activityName) throws NoActivityFoundException;
 }

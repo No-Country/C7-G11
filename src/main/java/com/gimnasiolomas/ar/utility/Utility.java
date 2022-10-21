@@ -1,6 +1,6 @@
 package com.gimnasiolomas.ar.utility;
 
-import com.gimnasiolomas.ar.entity.Plan;
+import com.gimnasiolomas.ar.constants.Messages;
 import com.gimnasiolomas.ar.entity.User;
 import com.gimnasiolomas.ar.entity.UserPlan;
 import com.gimnasiolomas.ar.entity.WeekDay;
@@ -76,7 +76,7 @@ public class Utility {
     }
 
     public static void checkActivePlan(String email){
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email).orElseThrow(()-> new NotFoundException(Messages.USER_NOT_FOUND));
         UserPlan userPlan = user.getUserPlans().stream().filter(UserPlan::isActive).findFirst().orElseThrow(()-> new NotFoundException("No hay planes activos"));
         if(userPlan.getExpireDate().isAfter(LocalDate.now())){
             userPlan.setActive(false);

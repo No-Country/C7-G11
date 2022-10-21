@@ -22,7 +22,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
     public void init(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.userDetailsService(usuarioEmail -> {
-            com.gimnasiolomas.ar.entity.User user = userRepository.findByEmail(usuarioEmail);
+            com.gimnasiolomas.ar.entity.User user = userRepository.findByEmail(usuarioEmail).orElse(null);
             if (user != null) {
                 return new User(user.getEmail(), user.getPassword(), AuthorityUtils.createAuthorityList("USER"));
             } else {
