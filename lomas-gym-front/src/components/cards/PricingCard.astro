@@ -20,7 +20,7 @@ const { plan_name, price, benefits } = Astro.props as IPricingCard
         class="bg-[#FF7A0025] h-[4.375rem] flex items-center justify-center text-3xl gap-2"
     >
         $ {price}
-        <span class="text-xl font-semibold uppercase">/ Anual</span>
+        <span class="text-xl font-semibold uppercase">/ Mes</span>
     </h3>
     <div class="flex items-center justify-center pt-10">
         <ul class="list-disc gap-2 flex flex-col">
@@ -30,8 +30,10 @@ const { plan_name, price, benefits } = Astro.props as IPricingCard
     <button
         class="border border-dark-blue w-full absolute bottom-0 rounded-b-2xl py-4 bg-dark-blue"
     >
-        <span class="font-semibold uppercase text-2xl text-white"
-            >Comenzar Ahora</span
+        <a
+            href="/auth/register"
+            class="font-semibold uppercase text-2xl text-white"
+            >Comenzar Ahora</a
         >
     </button>
 </article>

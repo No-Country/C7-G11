@@ -1,0 +1,47 @@
+---
+import {
+    emailIcon,
+    facebookIcon,
+    instagramIcon,
+    telephoneIcon,
+    twitterIcon
+} from '../../../public/icons'
+import { map } from '../../../public/images'
+import logo from '../../../public/logo.svg'
+---
+
+<footer class="bg-dark-blue w-full absolute -bottom-[275rem] left-0 flex">
+    <div class="flex-1 text-white flex flex-col items-center gap-10 py-10">
+        <img src={logo} alt="" />
+        <p class="text-lg font-medium">
+            Las Heras 646 - Lomas de Zamora - Buenos Aires
+        </p>
+        <p>Aviso legal - Política de cookies - Política de privacidad</p>
+    </div>
+    <div class="flex-1 flex items-center justify-center">
+        <img src={map} alt="" width="350" height="250" />
+    </div>
+    <div class="flex-1 flex flex-col items-center justify-center gap-10 w-full">
+        <div class="flex items-center justify-around w-full">
+            <a href="https://www.instagram.com/" target="_blank">
+                <img src={instagramIcon} alt="" class="w-10 h-10" />
+            </a>
+            <a href="https://es-la.facebook.com/" target="_blank">
+                <img src={facebookIcon} alt="" class="w-10 h-10" />
+            </a>
+            <a href="https://twitter.com/" target="_blank">
+                <img src={twitterIcon} alt="" class="w-10 h-10" />
+            </a>
+        </div>
+        <div class="text-white flex flex-col text-lg">
+            <div class="flex items-center gap-10">
+                <img src={emailIcon} alt="" class="w-10 h-10" />
+                <span>gimnasio_lomas@gmail.com</span>
+            </div>
+            <div class="flex items-center gap-10">
+                <img src={telephoneIcon} alt="" class="w-10 h-10" />
+                <span>11 26159236</span>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,3 +1,7 @@
 export { default as cardioImage } from './cardio-image.png'
 export { default as pilateImage } from './pilate-image.png'
 export { default as zumbaImage } from './zumba-image.png'
+export { default as testimonialImage1 } from './testimonial-image-1.jpg'
+export { default as testimonialImage2 } from './testimonial-image-2.jpg'
+export { default as testimonialImage3 } from './testimonial-image-3.jpg'
+export { default as map } from './map.jpg'

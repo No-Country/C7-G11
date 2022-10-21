@@ -1,19 +1,23 @@
 ---
+interface ITestimonialCard {
+    name: string
+    testimonial: string
+    image: any
+}
+
+const { name, testimonial, image } = Astro.props as ITestimonialCard
 ---
 
 <div class="relative pl-[4.6881rem] pt-[4.6881rem] flex flex-shrink-0">
-    <div
-        class="w-[9.375rem] h-[9.375rem] bg-slate-800 absolute top-0 left-0 rounded-full"
-    >
+    <div class="w-32 h-32 bg-slate-800 absolute top-2 left-2 rounded-full">
+        <img src={image} alt="" class="w-32 h-32 object-cover rounded-full" />
     </div>
     <div
-        class="text-center flex flex-col gap-10 bg-[#F6EFDD] rounded-br-[5rem] w-[500px] py-12 px-20"
+        class="flex flex-col gap-10 bg-[#F6EFDD] rounded-br-[5rem] w-[400px] py-12 px-16"
     >
-        <h1 class="text-[30px] font-semibold uppercase">Oscar</h1>
-        <p>
-            "Soy cliente del Gimnasio desde hace 3 años. La atención es
-            excelente. Me gusta que se pueda elegir el turno desde la comodidad
-            de mi casa. "
+        <h1 class="text-[30px] font-semibold uppercase">{name}</h1>
+        <p class="text-lg h-32">
+            {testimonial}
         </p>
     </div>
 </div>

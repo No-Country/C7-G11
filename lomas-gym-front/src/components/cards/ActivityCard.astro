@@ -22,15 +22,11 @@ const { name, description, image, image_alt } = Astro.props as IActivityCard
 
         <div class="card-back">
             <div
-                class="absolute w-full h-full bg-gray-200 grid place-content-center px-10 gap-y-6"
+                class="absolute w-full h-full bg-white grid place-content-center px-10 gap-y-6"
             >
                 <p>
                     {description}
                 </p>
-                <button
-                    class="border border-[#2A2550] px-4 py-2 hover:bg-[#2A2550] hover:text-white rounded-xl"
-                    >Ver mas</button
-                >
             </div>
         </div>
     </div>
