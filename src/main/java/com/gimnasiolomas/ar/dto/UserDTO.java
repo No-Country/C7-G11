@@ -6,6 +6,7 @@ import com.gimnasiolomas.ar.restriction.UniqueEmail;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ public class UserDTO {
     @NotBlank
     @PasswordConstraint
     private String password;
+    private LocalDate birthday;
     private Set<UserActivityScheduleDTO> userActivitySchedulesDTO = new HashSet<>();
     private Set<UserPlanDTO> userPlansDTO = new HashSet<>();
 
@@ -38,6 +40,7 @@ public class UserDTO {
         this.password = user.getPassword();
         this.userActivitySchedulesDTO = user.getUserActivitySchedules().stream().map(UserActivityScheduleDTO::new).collect(Collectors.toSet());
         this.userPlansDTO = user.getUserPlans().stream().map(UserPlanDTO::new).collect(Collectors.toSet());
+        this.birthday = user.getBirthday();
     }
 
     public String getName() {
@@ -54,5 +57,8 @@ public class UserDTO {
     }
     public Set<UserPlanDTO> getUserPlansDTO() {
         return userPlansDTO;
+    }
+    public LocalDate getBirthday() {
+        return birthday;
     }
 }
