@@ -122,7 +122,10 @@ const Payment = () => {
                         </a>
                         <button
                             className="py-3 px-20 bg-[#E04D01]/50 rounded-lg text-white"
-                            onClick={() => setPaymentStep('processing')}
+                            onClick={() => {
+                                setPaymentStep('processing')
+                                handlePayment()
+                            }}
                         >
                             {' '}
                             Finalizá pago{' '}
@@ -143,7 +146,7 @@ const Payment = () => {
         )
     } else if (paymentStep == 'success') {
         return (
-            <div className="flex justify-center items-center gap-60 w-screen h-full membership-container">
+            <div className="flex justify-center items-center gap-60 w-screen h-screen membership-container">
                 <div className="border-2 boder-[#2A2550] rounded-xl bg-white text-center flex flex-col items-center max-w-[491px] max-h-[488px] p-20">
                     <img src={successIcon} className="max-w-[80px]" />
                     <h2 className="mt-8 mb-2 font-bold text-xl">
