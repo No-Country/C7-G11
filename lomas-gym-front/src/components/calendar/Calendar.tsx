@@ -6,9 +6,14 @@ import ScheduleTime from '../calendar/ScheduleTime'
 
 const Calendar = () => {
     const [selectedDay, setSelectedDay] = useState(new Date())
+    const [selectedHour, setSelectedHour] = useState('')
 
     const handleDayClick = (day: any) => {
         setSelectedDay(new Date(day.year, day.month, day.number))
+    }
+
+    const handleHourClick = (hour: string) => {
+        setSelectedHour(hour)
     }
 
     const handleNextMonth = (direction: string) => {
@@ -29,6 +34,33 @@ const Calendar = () => {
                 )
             )
         }
+    }
+
+    console.log(selectedDay.toString().slice(0, 3))
+
+    const handleRequest = () => {
+        const date =
+            selectedDay.toISOString().slice(0, 11) + selectedHour.split(' ')[0]
+
+        const bodyRequest = {
+            activityName: 'Pilates',
+            date: date
+        }
+
+        fetch('https://c7-g11-production.up.railway.app/api/users/activity', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(bodyRequest),
+            credentials: 'include'
+        })
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     return (
@@ -76,9 +108,15 @@ const Calendar = () => {
                         </div>
                     </div>
                 </div>
-                <ScheduleTime />
+                <ScheduleTime
+                    handleHourClick={handleHourClick}
+                    selectedHour={selectedHour}
+                />
             </div>
-            <button className="w-full bg-accent-2 px-10 py-2 text-white text-2xl font-bold tracking-wide rounded-xl">
+            <button
+                className="w-full bg-accent-2 px-10 py-2 text-white text-2xl font-bold tracking-wide rounded-xl"
+                onClick={handleRequest}
+            >
                 Reservar
             </button>
         </div>

@@ -48,14 +48,17 @@ const CalendarDays: React.FC<ICalendarDays> = ({
                 return (
                     <div
                         className={
-                            'h-12 w-12 relative border border-dark-blue/10 text-center bg-stone-200' +
+                            'h-12 w-12 relative border border-dark-blue/10 text-center' +
                             (day.currentMonth ? 'text-dark-blue' : '') +
-                            (day.selected ? 'font-bold bg-accent-3' : '')
+                            (day.selected ? ' font-bold bg-[#E04D0150]' : '') +
+                            (day.date.toString().slice(0, 3) === 'Sun'
+                                ? ' bg-secondary text-white'
+                                : ' bg-stone-100')
                         }
                         onClick={() => handleDayClick(day)}
                         key={day.date.toDateString()}
                     >
-                        <p className="flex items-center justify-center hover:bg-slate-100/50 h-full">
+                        <p className="flex items-center justify-center hover:bg-slate-100/50 h-full cursor-pointer">
                             {day.number}
                         </p>
                     </div>
