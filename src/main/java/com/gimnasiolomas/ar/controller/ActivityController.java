@@ -43,5 +43,8 @@ public class ActivityController {
     public List<String> listOfUsers(@RequestBody UsersListDTO usersListDTO) throws NoActivityFoundException {
         return activityService.listOfUsers(usersListDTO);
     }
-
+    @DeleteMapping
+    public ResponseEntity<?> deleteActivity(@RequestParam long id) throws NoActivityFoundException {
+        return ResponseEntity.ok(activityService.deleteActivity(id));
+    }
 }
