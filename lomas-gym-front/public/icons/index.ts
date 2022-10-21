@@ -1,0 +1,7 @@
+export { default as footIcon } from './foot-icon.svg'
+export { default as appleIcon } from './apple-icon.svg'
+export { default as whistleIcon } from './whistle-icon.svg'
+export { default as leftArrowIcon } from './left-arrow.svg'
+export { default as rightArrowIcon } from './right-arrow.svg'
+export { default as upArrowIcon } from './up-arrow.svg'
+export { default as downArrowIcon } from './down-arrow.svg'

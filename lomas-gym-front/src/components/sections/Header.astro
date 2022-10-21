@@ -1,0 +1,34 @@
+---
+import headerWomanImage from '../../../public/images/header-woman-image.png'
+import headerColorBars from '../../../public/images/header-color-bars.svg'
+---
+
+<section class="w-full h-full relative flex">
+    <div class="flex-1 absolute top-40 flex flex-col gap-10">
+        <div class="flex flex-col gap-2">
+            <h1 class="text-4xl font-bold">
+                MÁS QUE UN GIMNASIO <br />
+            </h1>
+            <h1 class="text-5xl font-bold">SOMOS TU <br /> CENTRO DEPORTIVO</h1>
+        </div>
+        <p class="text-2xl w-2/5">
+            Llevamos más de 20 años al servicio de la ciudad de Lomas de Zamora.
+            Ofrecemos instalaciones de la mejor calidad que te permitan
+            disfrutar del deporte. <br />Contamos con el asesoramiento de un
+            equipo de profesionales especializados en tu bienestar físico y
+            emocional.
+        </p>
+    </div>
+    <div class="w-full h-full relative">
+        <img
+            src={headerWomanImage}
+            alt=""
+            class="absolute top-0 right-0 z-10"
+        />
+        <img src={headerColorBars} alt="" class="absolute top-0 -right-32" />
+    </div>
+    <div class="absolute bottom-24 left-1/2 flex gap-4">
+        <button class="w-6 h-6 bg-orange-600 rounded-full"></button>
+        <button class="w-6 h-6 bg-gray-300 rounded-full"></button>
+    </div>
+</section>

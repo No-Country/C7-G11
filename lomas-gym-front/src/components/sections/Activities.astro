@@ -1,0 +1,30 @@
+---
+import { activitiesData } from '../../lib/data/activitiesData'
+import ActivityCard from '../cards/ActivityCard.astro'
+---
+
+<section
+    class="bg-gradient-to-br from-[#E26A2C] via-[#FFD07F] to-[#f6f6f6] h-[800px] rounded-3xl py-20 flex flex-col gap-10"
+>
+    <div
+        class="flex flex-col items-center justify-center text-dark-blue text-center gap-10"
+    >
+        <h1 class="text-5xl font-bold">Actividades</h1>
+        <p class="text-3xl font-semibold">
+            En nuestras instalaciones encontrarás las actividades <br /> que necesitás
+            para tu bienestar físico y emocional
+        </p>
+    </div>
+    <div class="flex w-full justify-evenly">
+        {
+            activitiesData.map(activity => (
+                <ActivityCard
+                    name={activity.name}
+                    description={activity.description}
+                    image={activity.image}
+                    image_alt={activity.imageAlt}
+                />
+            ))
+        }
+    </div>
+</section>

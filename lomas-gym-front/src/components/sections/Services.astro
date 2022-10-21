@@ -1,0 +1,74 @@
+---
+import { appleIcon, footIcon, whistleIcon } from '../../../public/icons'
+---
+
+<section class="rounded-b-3xl py-36 flex flex-col gap-40 custom-gradient">
+    <div class="text-center">
+        <h1 class="text-[2.5rem] font-bold">Servicios</h1>
+        <p class="text-[1.875rem] font-semibold">
+            Contamos con profesionales capacitados para mejorar tu rendimiento,
+            salud y bienestar.
+        </p>
+    </div>
+    <div class="flex w-full justify-around items-center">
+        <div class="flex flex-col items-center justify-center gap-8">
+            <div
+                class="bg-[#2A255099] flex items-center justify-center w-48 h-48 rounded-full hover:bg-[#2A2550] transition-all duration-300"
+            >
+                <img src={footIcon} alt="" class="w-[60px] h-[100px]" />
+            </div>
+            <div class="text-center flex flex-col gap-4">
+                <h2 class="text-2xl uppercase text-[#E04d01] font-bold">
+                    Fisioterapia
+                </h2>
+                <p class="w-80 text-lg font-semibold text-dark-blue">
+                    Rehabilitación traumatológica, deportiva y en disfunciones
+                    del aparato locomotor.
+                </p>
+            </div>
+        </div>
+        <div class="flex flex-col items-center justify-center gap-8">
+            <div
+                class="bg-[#2A255099] flex items-center justify-center w-48 h-48 rounded-full hover:bg-[#2A2550] transition-all duration-300"
+            >
+                <img src={appleIcon} alt="" />
+            </div>
+            <div class="text-center flex flex-col gap-4">
+                <h2 class="text-2xl uppercase text-[#E04d01] font-bold">
+                    Nutrición
+                </h2>
+                <p class="w-80 text-lg font-semibold text-dark-blue">
+                    Una planificación nutricional para deportistas, ya seas
+                    amateur o profesional.
+                </p>
+            </div>
+        </div>
+        <div class="flex flex-col items-center justify-center gap-8">
+            <div
+                class="bg-[#2A255099] flex items-center justify-center w-48 h-48 rounded-full hover:bg-[#2A2550] transition-all duration-300"
+            >
+                <img src={whistleIcon} alt="" />
+            </div>
+            <div class="text-center flex flex-col gap-4">
+                <h2 class="text-2xl uppercase text-[#E04d01] font-bold">
+                    Entrenamiento <br /> Personal
+                </h2>
+                <p class="w-80 text-lg font-semibold text-dark-blue">
+                    Acompañamos tus rutinas y ejercicios. Motivación y metas.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .custom-gradient {
+        background: linear-gradient(
+            337deg,
+            #e26a2c -3%,
+            #ffd07f 20%,
+            #ffffff 60%
+        );
+    }
+    transform: rotate(-180deg);
+</style>

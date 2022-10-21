@@ -1,0 +1,47 @@
+---
+import TestimonialCard from '../cards/TestimonialCard.astro'
+---
+
+<section class="flex flex-col py-32 gap-24">
+    <div class="text-center flex flex-col gap-2">
+        <h1 class="text-[2.5rem] font-bold">Lo que nuestros socios opinan</h1>
+        <p class="text-[1.875rem] font-semibold">
+            Las opiniones de nuestros clientes son una muestra de lo que vas a
+            encontrar en nuestras instalaciones.
+        </p>
+    </div>
+    <div
+        id="scrollContainer"
+        class="flex items-center gap-32 overflow-x-auto h-96"
+    >
+        <TestimonialCard />
+        <TestimonialCard />
+        <TestimonialCard />
+    </div>
+</section>
+
+<script>
+    const scrollContainer = document.getElementById('scrollContainer')
+
+    scrollContainer?.addEventListener('wheel', evt => {
+        evt.preventDefault()
+        scrollContainer.scrollLeft += evt.deltaY
+    })
+</script>
+
+<style>
+    * {
+        scrollbar-width: auto;
+        scrollbar-color: #db720f #ffffff;
+    }
+
+    *::-webkit-scrollbar {
+        width: 16px;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background-color: #db720f;
+        border-radius: 10px;
+        border: 3px solid #ffffff;
+    }
+</style>

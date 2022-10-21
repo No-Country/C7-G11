@@ -1,0 +1,45 @@
+---
+import PricingCard from '../cards/PricingCard.astro'
+
+const benefits = [
+    ['13 Pases al mes.'],
+    ['Pases libres', '1 Consulta al nutricionista al mes'],
+    [
+        'Pases libres',
+        '4 Consulta al nutricionista al mes',
+        '4 sesiones de fisioterapia al mes'
+    ]
+]
+---
+
+<section
+    class="custom-gradient h-[800px] rounded-t-3xl py-20 flex flex-col gap-10"
+>
+    <div class="text-center">
+        <h1 class="text-[2.5rem] font-bold">Nuestros Precios</h1>
+        <p class="text-[1.875rem] font-semibold">
+            Elegí entre nuestras membresías la más conveniente y empezá a
+            entrenar
+        </p>
+    </div>
+    <div class="flex items-center justify-around">
+        <PricingCard plan_name="Basico" price="18.000" benefits={benefits[0]} />
+        <PricingCard plan_name="VIP" price="24.000" benefits={benefits[1]} />
+        <PricingCard
+            plan_name="Premium"
+            price="30.000"
+            benefits={benefits[2]}
+        />
+    </div>
+</section>
+
+<style>
+    .custom-gradient {
+        background: linear-gradient(
+            161deg,
+            #e26a2c -3%,
+            #ffd07f 20%,
+            #ffffff 60%
+        );
+    }
+</style>

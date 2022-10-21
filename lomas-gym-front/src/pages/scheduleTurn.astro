@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Calendar from '../components/calendar/Calendar'
+---
+
+<Layout title="Lomas Gym - Schedule Turn">
+    <main
+        class="w-full h-screen pt-[5.5rem] custom-gradient flex items-center justify-center"
+    >
+        <div class="flex flex-col text-center gap-16 items-center">
+            <h1 class="text-3xl font-bold">
+                Selecciona los días y horarios de tus pases
+            </h1>
+            <div class="w-3/5 flex">
+                <Calendar client:idle />
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .custom-gradient {
+        background: linear-gradient(
+            348deg,
+            #e26a2c -2.38%,
+            #ffd07f 14.9%,
+            #ffffff 59.45%
+        );
+    }
+</style>

@@ -14,11 +14,6 @@ const CustomClasses = plugin(function ({ addUtilities }) {
         },
         '.perspective-1000': {
             perspective: '1000px'
-        },
-        '.services-golden-gradient': {
-            backgroundImage:
-                'linear-gradient(149.69deg, #E26A2C -2.38%, #FFD07F 14.9%, #FFFFFF 59.45%)',
-            transform: 'rotate(-180deg)'
         }
     }
 
@@ -31,7 +26,10 @@ module.exports = {
         extend: {
             colors: {
                 'dark-blue': '#2A2550',
-                'light-blue': '#6F759C'
+                secondary: '#666381',
+                accent: '#A63A01',
+                'accent-2': '#E04D01',
+                'accent-3': '#E04D0150'
             }
         }
     },

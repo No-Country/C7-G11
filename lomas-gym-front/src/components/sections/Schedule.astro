@@ -1,0 +1,124 @@
+---
+import colorBars from '../../../public/images/color-bars-schedule.svg'
+---
+
+<section class="py-20 w-full h-full relative overflow-hidden">
+    <img
+        src={colorBars}
+        alt=""
+        class="w-[2000px] h-[1400px] absolute right-0 -top-20"
+    />
+    <div class="flex flex-col gap-6">
+        <div class="flex flex-col gap-2 text-center">
+            <h1 class="text-[2.5rem] font-bold">Horarios</h1>
+            <p class="text-2xl">
+                Conocé el horario de nuestras actividades y planificá tu
+                entrenamiento
+            </p>
+        </div>
+        <table
+            class="bg-white text-gray-900 table-fixed w-full shadow-none z-10 border border-black"
+        >
+            <thead>
+                <tr class="border-b border-black">
+                    <th class="bg-white text-black p-6">Horario</th>
+                    <th class="bg-white text-black p-6">Lunes</th>
+                    <th class="bg-white text-black p-6">Martes</th>
+                    <th class="bg-white text-black p-6 w-auto">Miércoles</th>
+                    <th class="bg-white text-black p-6 w-auto">Jueves</th>
+                    <th class="bg-white text-black p-6 w-auto">Viernes</th>
+                    <th class="bg-white text-black p-6 w-auto">Sábado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-dark-blue text-center">
+                    <td class="p-10 border border-black font-bold text-xl"
+                        >8:00 AM</td
+                    >
+                    <td
+                        class="p-10 bg-[#A63A01] flex flex-col text-white items-center gap-2"
+                    >
+                        <span class="text-xl">Pilates</span>
+                        <span>Lore</span>
+                        <span class="w-36">8:00 AM - 11:00 AM</span>
+                    </td>
+                    <td class="p-10"></td>
+                    <td
+                        class="p-10 bg-[#A63A01] flex flex-col text-white items-center gap-2"
+                    >
+                        <span class="text-xl">Pilates</span>
+                        <span>Lore</span>
+                        <span class="w-36">8:00 AM - 11:00 AM</span>
+                    </td>
+                    <td class="p-10"></td>
+                    <td
+                        class="p-10 bg-[#A63A01] flex flex-col text-white items-center gap-2"
+                    >
+                        <span class="text-xl">Pilates</span>
+                        <span>Lore</span>
+                        <span class="w-36">8:00 AM - 11:00 AM</span>
+                    </td>
+                    <td class="p-10"></td>
+                </tr>
+                <tr class="text-blue-900 text-center">
+                    <td class="p-10 border border-black font-bold text-xl"
+                        >12:00 PM</td
+                    >
+                    <td class="p-10"></td>
+                    <td
+                        class="p-10 bg-dark-blue text-white flex flex-col gap-2 items-center"
+                    >
+                        <span class="text-xl">Zumba</span>
+                        <span>Frank</span>
+                        <span>12:30 PM - 3:00 PM</span>
+                    </td>
+                    <td class="p-10"></td>
+                    <td
+                        class="p-10 bg-dark-blue text-white flex flex-col gap-2 items-center"
+                    >
+                        <span class="text-xl">Zumba</span>
+                        <span>Frank</span>
+                        <span>12:30 PM - 3:00 PM</span>
+                    </td>
+                    <td class="p-10"></td>
+                    <td
+                        class="p-10 bg-dark-blue text-white flex flex-col gap-2 items-center"
+                    >
+                        <span class="text-xl">Zumba</span>
+                        <span>Frank</span>
+                        <span>12:30 PM - 3:00 PM</span>
+                    </td>
+                </tr>
+                <tr class="text-blue-900 text-center">
+                    <td class="p-10 border border-black font-bold text-xl"
+                        >4:00 PM</td
+                    >
+                    <td
+                        class="p-10 bg-[#6F759C] flex flex-col text-white items-center gap-2"
+                    >
+                        <span class="text-xl">Cardio</span>
+                        <span>Lore</span>
+                        <span class="w-36">4:00 PM - 6:00 PM</span>
+                    </td>
+                    <td class="p-10"></td>
+                    <td
+                        class="p-10 bg-[#6F759C] flex flex-col text-white items-center gap-2"
+                    >
+                        <span class="text-xl">Cardio</span>
+                        <span>Lore</span>
+                        <span class="w-36">4:00 PM - 6:00 PM</span>
+                    </td>
+                    <td class="p-10"></td>
+                    <td
+                        class="p-10 bg-[#6F759C] flex flex-col text-white items-center gap-2"
+                    >
+                        <span class="text-xl">Cardio</span>
+                        <span>Lore</span>
+                        <span class="w-36">4:00 PM - 6:00 PM</span>
+                    </td>
+                    <td class="p-10"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
