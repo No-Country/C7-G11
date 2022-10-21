@@ -49,9 +49,7 @@ public class UserController {
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        //TODO pruebas
-        auth.getAuthorities();
-        return ResponseEntity.ok(auth.getCredentials().toString());
+        return ResponseEntity.ok("Usuario autenticado exitosamente");
     }
     @PostMapping
     public ResponseEntity<?> saveUser(@Validated @RequestBody User user) throws UnderLegalAgeException {
