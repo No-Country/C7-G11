@@ -85,13 +85,3 @@ El usuario podrá optar por abonar con una tarjeta de débito visa siendo obliga
 Al ingresar un número de tarjeta inválido o dejar algún campo incompleto aparecerá un mensaje: "ingrese un número de tarjeta válido".
 
 Si el usuario ingresa con una tarjeta cuya fecha está caducada, el sistema emitirá el mensaje: "Ingrese una tarjeta con fecha de caducidad vigente. Si cree que es un error, contáctese con su banco". 
-
-
-
-.
-
-
-
-
-
-
