@@ -7,7 +7,11 @@ const Payment = () => {
     const methods = useForm()
     const [planes, _setPlanes] = useState([])
     const [paymentStep, setPaymentStep] = useState('payment')
-    const [membershipPlan, setMembershipPlan] = useState('')
+    const [membershipPlan, setMembershipPlan] = useState({
+        planName: '',
+        pricing: '',
+        benefits: []
+    })
 
     const {
         handleSubmit,
@@ -22,9 +26,17 @@ const Payment = () => {
         const selectedPlan = localStorage.getItem('selectedPlan')
 
         if (selectedPlan) {
-            setMembershipPlan(selectedPlan)
+            const parsed = JSON.parse(selectedPlan)
+
+            console.log(parsed)
+
+            setMembershipPlan(parsed)
         } else {
-            setMembershipPlan('')
+            setMembershipPlan({
+                planName: '',
+                pricing: '',
+                benefits: []
+            })
         }
     }, [])
 
@@ -51,18 +63,20 @@ const Payment = () => {
                     <p className="mb-2">Membresía Elegida</p>
                     <div className="border-2 boder-[#2A2550] rounded-lg min-w-[300px] font-medium">
                         <span className="flex bg-[#2A2550] text-white justify-center font-semibold mt-8">
-                            PREMIUM
+                            {membershipPlan?.planName}
                         </span>
                         <div className="pl-4 pb-4 mt-8">
                             <p>Incluye: </p>
                             <ul>
-                                <li>Pases libres</li>
-                                <li>4 consultas al nutricionista al mes</li>
-                                <li>4 sesiones de fisioterapia al mes</li>
+                                {membershipPlan.benefits.map(benefit => (
+                                    <li>{benefit}</li>
+                                ))}
                             </ul>
                             <div className="text-center mt-4">
-                                <p className="text-4xl">$30.000</p>
-                                <p>ANUAL</p>
+                                <p className="text-4xl">
+                                    $ {membershipPlan.pricing}
+                                </p>
+                                <p>MES</p>
                             </div>
                         </div>
                     </div>

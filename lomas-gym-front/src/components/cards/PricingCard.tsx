@@ -74,11 +74,27 @@ const PricingCard: React.FC<PriceCardProps> = ({
 
         if (localSelectedPlan) {
             localStorage.removeItem('selectedPlan')
+
+            localStorage.setItem(
+                'selectedPlan',
+                JSON.stringify({
+                    planName: plan_name,
+                    pricing: price,
+                    benefits: benefits
+                })
+            )
         } else {
-            localStorage.setItem('selectedPlan', plan_name)
+            localStorage.setItem(
+                'selectedPlan',
+                JSON.stringify({
+                    plan_name,
+                    price,
+                    benefits
+                })
+            )
         }
 
-        window.location.href = '/payment'
+        window.location.href = '/auth/register'
     }
     return (
         <article className="bg-white w-80 h-[500px] rounded-2xl border border-dark-blue relative">
