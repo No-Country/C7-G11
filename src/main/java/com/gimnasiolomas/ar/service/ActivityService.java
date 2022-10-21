@@ -15,4 +15,5 @@ public interface ActivityService {
     ActivityDTO getActivityByName(String activityName) throws NoActivityFoundException;
     List<String> listOfUsers(UsersListDTO usersListDTO) throws NoActivityFoundException;
     Activity findByActivityName(String activityName) throws NoActivityFoundException;
+    String deleteActivity(long id) throws NoActivityFoundException;
 }

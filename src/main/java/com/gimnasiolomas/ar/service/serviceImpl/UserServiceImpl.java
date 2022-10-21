@@ -11,6 +11,7 @@ import com.gimnasiolomas.ar.repository.*;
 import com.gimnasiolomas.ar.service.*;
 import com.gimnasiolomas.ar.utility.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -179,6 +180,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         userPlanService.save(userPlan);
         return new UserPlanDTO(userPlan);
+    }
+
+    @Override
+    public String deleteUser(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(()-> new NotFoundException(Messages.USER_NOT_FOUND));
+        userRepository.delete(user);
+        return "Usuario eliminado";
     }
 
     private boolean validateActivePlan(User user) {

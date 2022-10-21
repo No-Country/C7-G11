@@ -60,6 +60,13 @@ public class ActivityImpl implements ActivityService {
     }
 
     @Override
+    public String deleteActivity(long id) throws NoActivityFoundException {
+        Activity activity = activityRepository.findById(id).orElseThrow(()-> new NoActivityFoundException(Messages.ACTIVITY_NOT_FOUND));
+        activityRepository.delete(activity);
+        return "Actividad eliminada";
+    }
+
+    @Override
     public ActivityDTO newActivity(ActivityDTO activityDTO) throws ActivityAlreadyExistException {
         if(activityRepository.findByActivityName(activityDTO.getActivity()).isPresent()){
             throw new ActivityAlreadyExistException(Messages.ACTIVITY_ALREADY_EXISTS);

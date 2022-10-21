@@ -66,4 +66,8 @@ public class UserController {
                                                         @Validated @RequestBody InscriptionDTO inscriptionDTO) throws ActivityAlreadyScheduledException, NoActivityFoundException, NoGymClassesLeftException {
         return ResponseEntity.ok(userService.createUserActivitySchedule(authentication, inscriptionDTO));
     }
+    @DeleteMapping
+    public ResponseEntity<?> deleteUser(@RequestParam String email){
+        return ResponseEntity.ok(userService.deleteUser(email));
+    }
 }
