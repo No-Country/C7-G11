@@ -7,6 +7,7 @@ import ScheduleTime from '../calendar/ScheduleTime'
 const Calendar = () => {
     const [selectedDay, setSelectedDay] = useState(new Date())
     const [selectedHour, setSelectedHour] = useState('')
+    const [selectedActivity, setSelectedActivity] = useState('')
 
     const handleDayClick = (day: any) => {
         setSelectedDay(new Date(day.year, day.month, day.number))
@@ -36,12 +37,16 @@ const Calendar = () => {
         }
     }
 
+    const handleSelectActivity = (activity: string) => {
+        setSelectedActivity(activity)
+    }
+
     const handleRequest = () => {
         const date =
             selectedDay.toISOString().slice(0, 11) + selectedHour.split(' ')[0]
 
         const bodyRequest = {
-            activityName: 'Pilates',
+            activityName: selectedActivity,
             dayHourActivity: date
         }
 
@@ -59,6 +64,9 @@ const Calendar = () => {
             })
             .catch(err => {
                 console.log(err)
+            })
+            .finally(() => {
+                window.location.href = '/scheduleTurn/success'
             })
     }
 
@@ -105,6 +113,45 @@ const Calendar = () => {
                                 <span>Dias Ocupados</span>
                             </div>
                         </div>
+
+                        <div className="absolute top-0 -left-96 flex flex-col gap-10">
+                            <button
+                                className="bg-secondary text-white py-3 px-10 hover:bg-secondary/70"
+                                onClick={() => handleSelectActivity('Pilates')}
+                            >
+                                <span className="text-2xl">Pilates</span>
+                            </button>
+                            <button
+                                className="bg-secondary text-white py-3 px-10 hover:bg-secondary/70"
+                                onClick={() => handleSelectActivity('Gimnasio')}
+                            >
+                                <span className="text-2xl">Gimnasio</span>
+                            </button>
+                            <button
+                                className="bg-secondary text-white py-3 px-10 hover:bg-secondary/70"
+                                onClick={() => handleSelectActivity('Zumba')}
+                            >
+                                <span className="text-2xl">Zumba</span>
+                            </button>
+                            <button
+                                className="bg-secondary text-white py-3 px-10 hover:bg-secondary/70"
+                                onClick={() => handleSelectActivity('Cardio')}
+                            >
+                                <span className="text-2xl">Cardio</span>
+                            </button>
+                        </div>
+
+                        <div className="absolute top-0 left-[750px] w-80 flex flex-col gap-8">
+                            <span className="text-3xl font-semibold">
+                                Actividad Seleccionada:
+                            </span>
+                            <span className="text-2xl">{selectedActivity}</span>
+                            {!selectedActivity && (
+                                <span className="text-red-500 text-2xl">
+                                    Debe seleccionar una actividad
+                                </span>
+                            )}
+                        </div>
                     </div>
                 </div>
                 <ScheduleTime
@@ -113,8 +160,12 @@ const Calendar = () => {
                 />
             </div>
             <button
-                className="w-full bg-accent-2 px-10 py-2 text-white text-2xl font-bold tracking-wide rounded-xl"
+                className={
+                    'w-full bg-accent-2 px-10 py-2 text-white text-2xl font-bold tracking-wide rounded-xl' +
+                    (!selectedActivity ? ' opacity-50 cursor-not-allowed' : '')
+                }
                 onClick={handleRequest}
+                disabled={!selectedActivity}
             >
                 Reservar
             </button>
