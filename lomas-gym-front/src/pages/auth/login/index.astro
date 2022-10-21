@@ -1,9 +1,8 @@
 ---
+import Login from '../../../components/authPages/Login'
 import Layout from '../../../layouts/Layout.astro'
 ---
 
 <Layout title="Lomas Gym - Login">
-    <main class="w-full h-screen grid place-content-center text-6xl">
-        <h1>auth/login page</h1>
-    </main>
+    <Login client:idle />
 </Layout>

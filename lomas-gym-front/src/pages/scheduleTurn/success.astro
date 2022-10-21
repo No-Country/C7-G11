@@ -1,0 +1,55 @@
+---
+import Layout from '../../layouts/Layout.astro'
+---
+
+<Layout title="Lomas Gym">
+    <main
+        class="w-full h-screen pt-[5.5rem] flex items-center justify-center flex-col gap-20"
+    >
+        <div
+            class="w-2/6 h-screen flex items-center justify-center flex-col gap-20"
+        >
+            <h1 class="text-4xl">Excelente has reservado tus pases!</h1>
+            <div class="border-2 border-dark-blue p-10 w-full rounded-xl">
+                <div
+                    class="w-full flex items-center justify-between py-4 border-b-2 border-accent-2 mb-8"
+                >
+                    <span class="text-3xl font-semibold text-accent-2">Dia</span
+                    >
+                    <span class="text-3xl font-semibold text-accent-2"
+                        >Hora</span
+                    >
+                </div>
+                <div class="flex flex-col gap-10">
+                    <ul
+                        class="list-disc list-inside w-full text-lg font-medium"
+                    >
+                        <li class="flex items-center justify-between">
+                            <span>Jueves 15 de noviembre</span>
+                            <span>12:00</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span>Miercoles 21 de noviembre</span>
+                            <span>13:00</span>
+                        </li>
+                    </ul>
+                    <div>
+                        <span> Total de pases reservados: 2</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-end justify-between w-full">
+                <div class="flex flex-col gap-2">
+                    <button
+                        class="bg-white border border-accent-2 py-2 rounded-xl w-72"
+                    >
+                        <a href="/profile" class="text-xl">Ir a mi Cuenta</a>
+                    </button>
+                </div>
+                <button class="bg-accent-2 text-white py-2 rounded-xl w-64">
+                    <span class="text-xl">Volver al inicio</span>
+                </button>
+            </div>
+        </div>
+    </main>
+</Layout>
