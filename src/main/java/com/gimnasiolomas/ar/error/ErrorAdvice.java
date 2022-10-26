@@ -42,7 +42,7 @@ public class ErrorAdvice {
     public ApiError handleConstraintViolationException(ConstraintViolationException e, HttpServletRequest request){
         ApiError apiError = new ApiError(400, e.getMessage(), request.getServletPath());
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
-        Map<String, String> validationErrors= new HashMap<>();
+        Map<String, String> validationErrors = new HashMap<>();
         for(ConstraintViolation<?> error: constraintViolations){
             validationErrors.put(error.getPropertyPath().toString(), error.getMessage());
         }
@@ -90,12 +90,31 @@ public class ErrorAdvice {
     @ExceptionHandler(NoActivityFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiError handleNoActivityFoundException(NoActivityFoundException e, HttpServletRequest request){
-        return new ApiError(400, e.getMessage(), request.getServletPath());
+        return new ApiError(404, e.getMessage(), request.getServletPath());
     }
     @ExceptionHandler(NoGymClassesLeftException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handleNoGymClassesLeftException(NoGymClassesLeftException e, HttpServletRequest request){
         return new ApiError(400, e.getMessage(), request.getServletPath());
     }
-
+    @ExceptionHandler(HolidayException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleHolidayException(HolidayException e, HttpServletRequest request){
+        return new ApiError(400, e.getMessage(), request.getServletPath());
+    }
+    @ExceptionHandler(CancelActivityScheduleException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleCancelActivityScheduleException (CancelActivityScheduleException e, HttpServletRequest request){
+        return new ApiError(400, e.getMessage(), request.getServletPath());
+    }
+    @ExceptionHandler(CancelInscriptionException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleCancelInscriptionException (CancelInscriptionException e, HttpServletRequest request){
+        return new ApiError(400, e.getMessage(), request.getServletPath());
+    }
+    @ExceptionHandler(MaxNumberOfMembersReachedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleMaxNumberOfMembersReachedException(MaxNumberOfMembersReachedException e, HttpServletRequest request){
+        return new ApiError(400, e.getMessage(), request.getServletPath());
+    }
 }

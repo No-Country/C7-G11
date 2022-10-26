@@ -21,6 +21,7 @@ public class UserActivitySchedule {
     private WeekDay day;
     private int hour;
     private LocalDateTime dayHourActivity;
+    private ScheduleState state;
 
 
     public UserActivitySchedule(){}
@@ -31,6 +32,7 @@ public class UserActivitySchedule {
         this.day = activitySchedule.getSchedule().getWeekDay();
         this.hour = activitySchedule.getSchedule().getHour();
         this.dayHourActivity = dayHourActivity;
+        this.state = ScheduleState.INSCRIPTO;
     }
 
     public long getId() {
@@ -67,12 +69,16 @@ public class UserActivitySchedule {
     public void setHour(int hour) {
         this.hour = hour;
     }
-
     public LocalDateTime getDayHourActivity() {
         return dayHourActivity;
     }
-
     public void setDayHourActivity(LocalDateTime dayHourActivity) {
         this.dayHourActivity = dayHourActivity;
+    }
+    public ScheduleState getState() {
+        return state;
+    }
+    public void setState(ScheduleState state) {
+        this.state = state;
     }
 }

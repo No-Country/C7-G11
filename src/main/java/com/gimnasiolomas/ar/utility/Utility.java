@@ -75,7 +75,7 @@ public class Utility {
         return null;
     }
 
-    public static void checkActivePlan(String email){
+    public static void checkActivePlan(String email) throws NotFoundException {
         User user = userRepository.findByEmail(email).orElseThrow(()-> new NotFoundException(Messages.USER_NOT_FOUND));
         UserPlan userPlan = user.getUserPlans().stream().filter(UserPlan::isActive).findFirst().orElseThrow(()-> new NotFoundException("No hay planes activos"));
         if(userPlan.getExpireDate().isAfter(LocalDate.now())){

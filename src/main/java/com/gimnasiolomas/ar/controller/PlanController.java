@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Set;
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/plan")
 public class PlanController {
@@ -20,7 +21,7 @@ public class PlanController {
     }
 
     @PostMapping
-    public ResponseEntity<?> savePlan(@RequestBody PlanDTO planDTO){
+    public ResponseEntity<?> savePlan(@Valid @RequestBody PlanDTO planDTO){
         return ResponseEntity.ok(planService.savePlan(planDTO));
     }
 }
