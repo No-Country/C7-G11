@@ -19,9 +19,11 @@ public class Activity {
     private String activityName;
     @OneToMany(mappedBy = "activity", fetch = FetchType.EAGER)
     private Set<ActivitySchedule> activitySchedules = new HashSet<>();
+    private int maxMembersPerClass;
     public Activity(){}
-    public Activity(String activityName){
+    public Activity(String activityName, int maxMembersPerClass){
         this.activityName = activityName;
+        this.maxMembersPerClass = maxMembersPerClass;
     }
 
     public void addActivitySchedule(ActivitySchedule activitySchedule) {
@@ -40,5 +42,11 @@ public class Activity {
     }
     public void setActivitySchedules(Set<ActivitySchedule> activitySchedules) {
         this.activitySchedules = activitySchedules;
+    }
+    public int getMaxMembersPerClass() {
+        return maxMembersPerClass;
+    }
+    public void setMaxMembersPerClass(int maxMembersPerClass) {
+        this.maxMembersPerClass = maxMembersPerClass;
     }
 }

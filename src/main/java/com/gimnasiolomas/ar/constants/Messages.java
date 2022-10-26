@@ -13,6 +13,13 @@ public class Messages {
     public static final String USER_NOT_LOGGED = "Debes estar logueado para realizar ésta acción";
     public static final String WELCOME = "Bienvenido a Gimnasio Lomas";
     public static final String ACTIVITY_ALREADY_EXISTS = "La actividad que quieres agregar, ya existía";
+    public static final String SUNDAY_EXCEPTION = "Los días domingo nuestro gimnasio permanecerá cerrado";
+    public static final String HOLIDAY_EXCEPTION = "Los días feriados nuestro gimnasio permanecerá cerrado";
+    public static final String CANCEL_OUT_OF_RANGE = "Sólo puedes cancelar tu turno hasta una hora antes del inicio del mismo";
+    public static final String NO_INSCRIPTION = "No tienes una inscripción para cancelar";
+    public static final String INSCRIPTION_ALREADY_CANCELED = "La inscripción que quieres cancelar ya estaba cancelada";
+    public static final String INSCRIPTION_ALREADY_ASSISTED = "No puedes cancelar una clase a la que ya has asistido";
+    public static final String MAX_NUMBER_OF_MEMBERS_REACHED = "No hay más lugares disponibles para la actividad en el horario seleccionado";
 }
 
 

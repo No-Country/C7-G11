@@ -7,4 +7,5 @@ import java.util.List;
 public interface UserActivityScheduleService {
     void save(UserActivitySchedule userActivitySchedule);
     List<UserActivitySchedule> findAll();
+    UserActivitySchedule findByID(long id);
 }

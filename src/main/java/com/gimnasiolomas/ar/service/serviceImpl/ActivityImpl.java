@@ -2,6 +2,7 @@ package com.gimnasiolomas.ar.service.serviceImpl;
 
 import com.gimnasiolomas.ar.constants.Messages;
 import com.gimnasiolomas.ar.dto.ActivityDTO;
+import com.gimnasiolomas.ar.dto.NewActivityScheduleDTO;
 import com.gimnasiolomas.ar.dto.UsersListDTO;
 import com.gimnasiolomas.ar.entity.Activity;
 import com.gimnasiolomas.ar.entity.ActivitySchedule;
@@ -55,46 +56,52 @@ public class ActivityImpl implements ActivityService {
     }
 
     @Override
-    public Activity findByActivityName(String activityName) throws NoActivityFoundException {
-        return activityRepository.findByActivityName(activityName).orElseThrow(()-> new NoActivityFoundException(activityName + ": " + Messages.ACTIVITY_NOT_FOUND));
+    public Activity findByActivityName(String activityName)
+            throws NoActivityFoundException {
+        return activityRepository.findByActivityName(activityName.toLowerCase()).orElseThrow(()-> new NoActivityFoundException(activityName + ": " + Messages.ACTIVITY_NOT_FOUND));
     }
 
     @Override
-    public String deleteActivity(long id) throws NoActivityFoundException {
+    public ActivityDTO deleteActivity(long id)
+            throws NoActivityFoundException {
         Activity activity = activityRepository.findById(id).orElseThrow(()-> new NoActivityFoundException(Messages.ACTIVITY_NOT_FOUND));
+        ActivityDTO activityDTO = new ActivityDTO(activity);
         activityRepository.delete(activity);
-        return "Actividad eliminada";
+        return activityDTO;
     }
 
     @Override
-    public ActivityDTO newActivity(ActivityDTO activityDTO) throws ActivityAlreadyExistException {
-        if(activityRepository.findByActivityName(activityDTO.getActivity()).isPresent()){
-            throw new ActivityAlreadyExistException(Messages.ACTIVITY_ALREADY_EXISTS);
-        }
-        Activity activity = new Activity(activityDTO.getActivity());
-        activityRepository.save(activity);
+    public ActivityDTO getActivityById(long id) throws NoActivityFoundException {
+        return new ActivityDTO(activityRepository.findById(id).orElseThrow(()-> new NoActivityFoundException(Messages.ACTIVITY_NOT_FOUND)));
+    }
 
+    @Override
+    public ActivityDTO newActivity(ActivityDTO activityDTO)
+            throws ActivityAlreadyExistException {
+
+        validateActivityAlreadyExists(activityDTO);
+
+        Activity activity = new Activity(activityDTO.getActivityName().toLowerCase(), activityDTO.getMaxMembersPerClass());
+        activityRepository.save(activity);
         return new ActivityDTO(activity);
     }
 
+
     @Override
-    public ActivityDTO newActivitySchedule(String activityName, String weekDay, int hour) {
-        if(activityRepository.findByActivityName(activityName).orElse(null)==null){
-            Activity activity = new Activity(activityName);
-            activityRepository.save(activity);
-            WeekDay weekDay1 = Utility.changeToUpperCase(weekDay);
-            Schedule schedule = new Schedule(weekDay1, hour);
-            scheduleService.save(schedule);
-            ActivitySchedule activitySchedule = new ActivitySchedule(activity, schedule);
-            activityScheduleService.save(activitySchedule);
-            return new ActivityDTO(activity);
-        }
-        Activity activity = activityRepository.findByActivityName(activityName).get();
-        WeekDay weekDay1 = Utility.changeToUpperCase(weekDay);
-        Schedule schedule = new Schedule(weekDay1, hour);
+    public ActivityDTO newActivitySchedule(NewActivityScheduleDTO newActivityScheduleDTO)
+            throws NoActivityFoundException {
+        Activity activity = activityRepository.findByActivityName(newActivityScheduleDTO.getActivityName().toLowerCase()).orElseThrow(()-> new NoActivityFoundException(Messages.ACTIVITY_NOT_FOUND));
+        WeekDay weekDay = Utility.changeToUpperCase(newActivityScheduleDTO.getWeekDay());
+        Schedule schedule = new Schedule(weekDay, newActivityScheduleDTO.getHour());
         scheduleService.save(schedule);
         ActivitySchedule activitySchedule = new ActivitySchedule(activity, schedule);
         activityScheduleService.save(activitySchedule);
         return new ActivityDTO(activity);
+    }
+
+    private void validateActivityAlreadyExists(ActivityDTO activityDTO) throws ActivityAlreadyExistException {
+        if(activityRepository.findByActivityName(activityDTO.getActivityName().toLowerCase()).isPresent()){
+            throw new ActivityAlreadyExistException(Messages.ACTIVITY_ALREADY_EXISTS);
+        }
     }
 }
