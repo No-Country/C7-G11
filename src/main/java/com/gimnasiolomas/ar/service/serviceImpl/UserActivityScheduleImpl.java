@@ -6,7 +6,6 @@ import com.gimnasiolomas.ar.service.UserActivityScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
-
 import java.util.List;
 
 @Service
@@ -25,6 +24,8 @@ public class UserActivityScheduleImpl implements UserActivityScheduleService {
 
     @Override
     public UserActivitySchedule findByID(long id) {
-        return userActivityScheduleRepository.findById(id).orElseThrow(() -> new NotFoundException("Inscripción a la actividad no encontrada"));
+        return userActivityScheduleRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Inscripción a la actividad no encontrada"));
     }
 }

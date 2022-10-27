@@ -5,6 +5,7 @@ import com.gimnasiolomas.ar.repository.UserPlanRepository;
 import com.gimnasiolomas.ar.service.UserPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class UserPlanImpl implements UserPlanService {
@@ -13,5 +14,9 @@ public class UserPlanImpl implements UserPlanService {
     @Override
     public void save(UserPlan userPlan) {
         userPlanRepository.save(userPlan);
+    }
+    @Override
+    public List<UserPlan> findAll(){
+        return userPlanRepository.findAll();
     }
 }

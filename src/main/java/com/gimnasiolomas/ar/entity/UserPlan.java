@@ -1,7 +1,6 @@
 package com.gimnasiolomas.ar.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 @Entity
