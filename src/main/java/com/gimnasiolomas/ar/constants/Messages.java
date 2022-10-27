@@ -20,6 +20,8 @@ public class Messages {
     public static final String INSCRIPTION_ALREADY_CANCELED = "La inscripción que quieres cancelar ya estaba cancelada";
     public static final String INSCRIPTION_ALREADY_ASSISTED = "No puedes cancelar una clase a la que ya has asistido";
     public static final String MAX_NUMBER_OF_MEMBERS_REACHED = "No hay más lugares disponibles para la actividad en el horario seleccionado";
+    public static final String ACCOUNT_SID = "ACcf6dab4c572db85cce1227a16ed8b3c2";
+    public static final String AUTH_TOKEN = "c8666d4c6b49921368678b81e927ae7d";
 }
 
 

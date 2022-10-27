@@ -1,10 +1,12 @@
 package com.gimnasiolomas.ar.controller;
 
 import com.gimnasiolomas.ar.dto.*;
-import com.gimnasiolomas.ar.entity.User;
 import com.gimnasiolomas.ar.error.*;
 import com.gimnasiolomas.ar.service.EmailSenderService;
 import com.gimnasiolomas.ar.service.UserService;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,8 +15,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
+
+import static com.gimnasiolomas.ar.constants.Messages.ACCOUNT_SID;
+import static com.gimnasiolomas.ar.constants.Messages.AUTH_TOKEN;
 
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -88,5 +94,27 @@ public class UserController {
             CancelActivityScheduleException,
             CancelInscriptionException {
         return ResponseEntity.ok(userService.cancelUserActivitySchedule(authentication, userActivityScheduleDTO));
+    }
+
+
+    @GetMapping("/sms")
+    public ResponseEntity<?> sendMessaje(){
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        Message message = Message.creator(
+                        new PhoneNumber("+549"),//To -----> Agregar numero. Importante NO agregar el 9!!!!
+                        new PhoneNumber("+13023032627"),//From
+                        "Holaaaaaa por SMS"//Mensaje
+                ).create();
+        return ResponseEntity.ok().build();
+    }
+    @GetMapping("/whatsapp")
+    public ResponseEntity<?> sendWAMessaje(){
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        Message message = Message.creator(
+                new PhoneNumber("whatsapp:+549"),//To ----> Agregar numero. Importante agregar el 9!!!!
+                new PhoneNumber("whatsapp:+14155238886"),//From
+                "Holaaaaaaa desde Whatsapp"//Mensaje
+        ).create();
+        return ResponseEntity.ok().build();
     }
 }

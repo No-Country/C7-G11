@@ -1,5 +1,6 @@
 package com.gimnasiolomas.ar.error;
 
+import com.twilio.exception.ApiException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -115,6 +116,11 @@ public class ErrorAdvice {
     @ExceptionHandler(MaxNumberOfMembersReachedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handleMaxNumberOfMembersReachedException(MaxNumberOfMembersReachedException e, HttpServletRequest request){
+        return new ApiError(400, e.getMessage(), request.getServletPath());
+    }
+    @ExceptionHandler(ApiException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleApiException(ApiException e, HttpServletRequest request){
         return new ApiError(400, e.getMessage(), request.getServletPath());
     }
 }
