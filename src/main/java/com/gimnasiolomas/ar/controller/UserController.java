@@ -1,9 +1,12 @@
 package com.gimnasiolomas.ar.controller;
 
 import com.gimnasiolomas.ar.dto.*;
+import com.gimnasiolomas.ar.entity.MyUserDetails;
 import com.gimnasiolomas.ar.error.*;
 import com.gimnasiolomas.ar.service.EmailSenderService;
+import com.gimnasiolomas.ar.service.MyUserDetailService;
 import com.gimnasiolomas.ar.service.UserService;
+import com.gimnasiolomas.ar.utility.JwtUtil;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
@@ -33,6 +36,10 @@ public class UserController {
     private UserService userService;
     @Autowired
     private EmailSenderService emailSenderService;
+    @Autowired
+    private MyUserDetailService myUserDetailService;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @GetMapping
     public List<UserDTO> findAll(){
@@ -54,7 +61,10 @@ public class UserController {
         Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        return ResponseEntity.ok("Usuario autenticado exitosamente");
+        final MyUserDetails myUserDetails = (MyUserDetails) myUserDetailService.loadUserByUsername(loginDTO.getEmail());
+        final String jwt = jwtUtil.generateToken(myUserDetails);
+
+        return ResponseEntity.ok(jwt);
     }
     @PostMapping
     public ResponseEntity<?> saveUser(@Validated @RequestBody UserRegisterDTO userRegisterDTO)

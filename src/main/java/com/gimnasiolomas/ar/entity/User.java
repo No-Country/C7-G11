@@ -33,6 +33,7 @@ public class User {
     private Set<UserActivitySchedule> userActivitySchedules = new HashSet<>();
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<UserPlan> userPlans = new HashSet<>();
+    private Role role;
 
     public User() {
     }
@@ -43,6 +44,7 @@ public class User {
         this.email = email.toLowerCase();
         this.password = password;
         this.birthday = birthday;
+        this.role = Role.USER;
     }
     public void addUserActivity(UserActivitySchedule userActivitySchedule) {
         userActivitySchedule.setUser(this);
@@ -100,5 +102,11 @@ public class User {
     }
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+    public Role getRole() {
+        return role;
+    }
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
