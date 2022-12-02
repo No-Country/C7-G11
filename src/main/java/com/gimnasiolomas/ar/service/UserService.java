@@ -16,7 +16,6 @@ public interface UserService {
     UserActivityScheduleDTO createUserActivitySchedule(Authentication authentication, InscriptionDTO inscriptionDTO) throws ActivityAlreadyScheduledException, NoActivityFoundException, NoGymClassesLeftException, NotFoundException, HolidayException, MaxNumberOfMembersReachedException;
     UserPlanDTO assignNewPlan(Authentication authentication, String planName) throws PlanNotFoundException, ActivePlanException, NotFoundException;
     String deleteUser(String email) throws NotFoundException;
-
     UserActivityScheduleDTO cancelUserActivitySchedule(Authentication authentication, UserActivityScheduleDTO userActivityScheduleDTO) throws NotFoundException, CancelActivityScheduleException, CancelInscriptionException;
 
 }
